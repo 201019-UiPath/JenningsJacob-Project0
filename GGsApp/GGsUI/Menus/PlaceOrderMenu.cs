@@ -12,11 +12,11 @@ namespace GGsUI.Menus
             // TODO: replace hardcoded locations with persisted data
             //       probbaly want to make a foreach loop to display a menu item for each location
             // Options
-            Console.WriteLine("1. Oakland, California");
-            Console.WriteLine("2. Seattle, Washington");
-            Console.WriteLine("3. Las Vegas, Nevada");
-            Console.WriteLine("4. Chicago, Illinois");
-            Console.WriteLine("5. Miami, Florida");
+            Console.WriteLine("1.\tOakland, California");
+            Console.WriteLine("2.\tSeattle, Washington");
+            Console.WriteLine("3.\tLas Vegas, Nevada");
+            Console.WriteLine("4.\tChicago, Illinois");
+            Console.WriteLine("5.\tMiami, Florida");
         }
     }
 }

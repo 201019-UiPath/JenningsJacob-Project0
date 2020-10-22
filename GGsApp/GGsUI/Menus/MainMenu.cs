@@ -14,7 +14,8 @@ namespace GGsUI.Menus
             Console.WriteLine("2.\tView Order History");
             Console.WriteLine("0.\tExit");
 
-            switch(Int32.Parse(Console.ReadLine())) {
+            int userChoice = Int32.Parse(Console.ReadLine());
+            switch(userChoice) {
                 case 0:
                     Console.WriteLine("Exiting");
                     break;
@@ -28,9 +29,9 @@ namespace GGsUI.Menus
                     break;
                 default:
                     Console.WriteLine("Invalid Input, Please select a menu item");
-                    Int32.Parse(Console.ReadLine());
                     break;
             }
+            
         }
     }
 }
