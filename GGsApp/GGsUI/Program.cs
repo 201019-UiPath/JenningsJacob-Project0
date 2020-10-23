@@ -7,7 +7,7 @@ namespace GGsUI
     {
         static void Main(string[] args)
         {
-            IMenu startMenu = new MainMenu();
+            IMenu startMenu = new WelcomeMenu();
             startMenu.Start();
         }
     }
