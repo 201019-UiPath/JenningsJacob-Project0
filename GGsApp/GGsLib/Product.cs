@@ -6,6 +6,6 @@ namespace GGsLib
     {
         public float Cost{get; set;}
         public string Name{get; set;}
-        
+        public int ProductID{get; set;}
     }
 }

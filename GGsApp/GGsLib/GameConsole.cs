@@ -1,6 +1,6 @@
 namespace GGsLib
 {
-    public class Console : Product
+    public class GameConsole : Product
     {
         public string Storage{get; set;}
         public bool IsDigitalEdition{get; set;}
