@@ -8,7 +8,7 @@ namespace GGsDB
 {
     public class VideoGameRepo : IRepository
     {
-        private string filename = "GGsDB/VideoGames/VideoGames.txt";
+        private string filename = "GGsDB/Products/VideoGames.txt";
         public async void AddVideoGameAsync(VideoGame videoGame)
         {
             using (FileStream fs = File.Create(path: filename)){
