@@ -6,7 +6,7 @@ namespace GGsDB
 {
     public interface IRepository
     {
-         Task<List<VideoGame>> GetAllVideoGamesAsync();
+         void AddVideoGameAsync(VideoGame videoGame);
          
     }
 }

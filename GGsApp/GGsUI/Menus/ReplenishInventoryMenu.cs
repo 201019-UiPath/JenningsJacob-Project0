@@ -7,6 +7,11 @@ namespace GGsUI.Menus
     {
         private string userInput;
         private bool showMenu = true;
+        private IRepository repo;
+
+        public ReplenishInventoryMenu(IRepository repo) {
+            this.repo = repo;
+        }
         public void Start()
         {
             do {
@@ -20,8 +25,8 @@ namespace GGsUI.Menus
                 switch (userInput)
                     {
                         case "1":
-                            AddVideoGame();
-                            // showMenu = false;
+                            VideoGame newGame = AddVideoGame();
+                            repo.AddVideoGameAsync(newGame);
                             break;
                         case "2":
                             showMenu = false;
@@ -38,7 +43,7 @@ namespace GGsUI.Menus
             } while(showMenu);
         }
 
-        public void AddVideoGame(){
+        public VideoGame AddVideoGame(){
             VideoGame videoGame = new VideoGame();
             Console.Write("Please enter the name of the game: ");
             videoGame.Name = Console.ReadLine();
@@ -50,6 +55,8 @@ namespace GGsUI.Menus
             videoGame.Platform = Console.ReadLine();
             Console.Write("Please enter the game's ESRB rating: ");
             videoGame.ESRB = Console.ReadLine();
+
+            return videoGame;
         }
     }
 }

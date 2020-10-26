@@ -1,4 +1,5 @@
 using System;
+using GGsDB;
 
 namespace GGsUI.Menus
 {
@@ -6,7 +7,7 @@ namespace GGsUI.Menus
     {  
         private string userInput;
         private bool showMenu = true;
-        private ReplenishInventoryMenu repMenu = new ReplenishInventoryMenu();
+        private ReplenishInventoryMenu repMenu = new ReplenishInventoryMenu(new VideoGameRepo());
         public void Start()
         {
             do {
