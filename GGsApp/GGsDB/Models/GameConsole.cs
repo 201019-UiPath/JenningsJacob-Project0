@@ -1,4 +1,4 @@
-namespace GGsLib
+namespace GGsDB
 {
     public class GameConsole : Product
     {
