@@ -6,7 +6,7 @@ namespace GGsDB
 {
     public interface IRepository
     {
-         void AddVideoGameAsync(VideoGame videoGame);
+        void AddProductAsync(Product product);
          
     }
 }

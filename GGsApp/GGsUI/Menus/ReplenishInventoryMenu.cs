@@ -18,7 +18,6 @@ namespace GGsUI.Menus
                 Console.WriteLine("What kind of product are you adding?");
                 Console.WriteLine("1.\tVideo Game");
                 Console.WriteLine("2.\tGame Console");
-                Console.WriteLine("3.\tShirt");
                 Console.WriteLine("0.\tExit");
 
                 userInput = Console.ReadLine();
@@ -26,13 +25,12 @@ namespace GGsUI.Menus
                     {
                         case "1":
                             VideoGame newGame = AddVideoGame();
-                            repo.AddVideoGameAsync(newGame);
+                            repo.AddProductAsync(newGame);
                             break;
                         case "2":
-                            showMenu = false;
-                            break;
-                        case "3":
-                            showMenu = false;
+                            GameConsole newGameConsole = AddGameConsole();
+                            repo = new GameConsoleRepo();
+                            repo.AddProductAsync(newGameConsole);
                             break;
                         case "0":
                             showMenu = false;
@@ -46,7 +44,7 @@ namespace GGsUI.Menus
         /// <summary>
         /// Creates new video game object and takes in information from user
         /// </summary>
-        /// <returns>New video games object to be passed to repo</returns>
+        /// <returns>New video games object to be passed to the repo</returns>
         public VideoGame AddVideoGame(){
             VideoGame videoGame = new VideoGame();
             Console.Write("Please enter the name of the game: ");
@@ -61,6 +59,41 @@ namespace GGsUI.Menus
             videoGame.ESRB = Console.ReadLine();
 
             return videoGame;
+        }
+
+        /// <summary>
+        /// Create new game console object and takes in information from user
+        /// </summary>
+        /// <returns>New game object to be passed to the repo</returns>
+        public GameConsole AddGameConsole(){
+            GameConsole gameConsole = new GameConsole();
+            Console.Write("Please enter the name of the console: ");
+            gameConsole.Name = Console.ReadLine();
+            Console.Write("Please enter the cost of the console: ");
+            gameConsole.Cost = decimal.Parse(Console.ReadLine());
+            Console.Write("How much storage does the console have (in TB): ");
+            gameConsole.Cost = int.Parse(Console.ReadLine());
+            string choice;
+            do {
+                Console.Write("Is this the digital edition? (Y/N): ");
+                choice = Console.ReadLine();
+           
+                switch(choice) {
+                case "Y":
+                case "y":
+                    gameConsole.IsDigitalEdition = true;
+                    return gameConsole;
+                case "N":
+                case "n":
+                    gameConsole.IsDigitalEdition = false;
+                    return gameConsole;
+                default:
+                    Console.WriteLine("Please answer using Y/N");
+                    break;
+                }
+            } while(!choice.Equals("Y") || !choice.Equals("N") || !choice.Equals("y") || !choice.Equals("n"));
+            
+            return gameConsole;
         }
     }
 }
