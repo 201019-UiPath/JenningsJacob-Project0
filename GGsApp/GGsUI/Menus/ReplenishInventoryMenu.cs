@@ -43,6 +43,10 @@ namespace GGsUI.Menus
             } while(showMenu);
         }
 
+        /// <summary>
+        /// Creates new video game object and takes in information from user
+        /// </summary>
+        /// <returns>New video games object to be passed to repo</returns>
         public VideoGame AddVideoGame(){
             VideoGame videoGame = new VideoGame();
             Console.Write("Please enter the name of the game: ");
