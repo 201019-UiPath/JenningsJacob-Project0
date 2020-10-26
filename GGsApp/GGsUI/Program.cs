@@ -7,11 +7,13 @@ namespace GGsUI
     {
         static void Main(string[] args)
         {
-            // IMenu startMenu = new WelcomeMenu();
-            // startMenu.Start();
+            // IMenu menu = new WelcomeMenu();
 
-            IMenu menu = new CustomerMainMenu();
+            // IMenu menu = new CustomerMainMenu();
+            
+            IMenu menu = new ManagerMenu();
             menu.Start();
+
         }
     }
 }
