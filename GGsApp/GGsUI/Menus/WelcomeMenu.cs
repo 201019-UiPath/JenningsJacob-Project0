@@ -23,6 +23,7 @@ namespace GGsUI.Menus
                         loginMenu.Start();
                         break;
                     case "2":
+                        // TODO: open sign up menu
                         break;
                     default:
                         Console.WriteLine("Please select an option from the menu");
