@@ -6,6 +6,6 @@ namespace GGsDB
     {
         public decimal Cost{get; set;}
         public string Name{get; set;}
-        public int ProductID{get; set;}
+        public int Id{get; set;}
     }
 }
