@@ -14,7 +14,6 @@ namespace GGsUI
             
             IMenu menu = new MainMenu(new GGsContext());
             menu.Start();
-
         }
     }
 }

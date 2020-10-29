@@ -15,6 +15,16 @@ namespace GGsDB
         public DbSet<GameConsole> GameConsoles {get; set;}
         public DbSet<VideoGame> VideoGames {get; set;}
 
+        public GGsContext()
+        {
+
+        }
+        public GGsContext(DbContextOptions<GGsContext> options)
+            : base(options)
+        {
+            
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if(!optionsBuilder.IsConfigured)

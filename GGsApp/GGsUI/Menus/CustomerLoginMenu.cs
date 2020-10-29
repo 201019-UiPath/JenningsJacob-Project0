@@ -17,12 +17,15 @@ namespace GGsUI.Menus
         }
         public void Start()
         {
-            do
-            {
-                Console.Write("Please enter your email: ");
-                email = Console.ReadLine();
+            Console.Write("Please enter your email: ");
+            email = Console.ReadLine();
+            try{
                 customerService.GetCustomerByEmail(email);
-            } while (true);
+            } catch(NullReferenceException e) {
+                Console.WriteLine("This email is incorrect, please try again");
+            }
+            
+
         }
     }
 }
