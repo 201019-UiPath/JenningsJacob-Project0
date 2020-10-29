@@ -1,4 +1,4 @@
-namespace GGsDB
+namespace GGsDB.Models
 {
     public class VideoGame : Product
     {

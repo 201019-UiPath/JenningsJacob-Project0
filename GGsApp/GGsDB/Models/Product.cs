@@ -1,11 +1,12 @@
 ﻿using System;
 
-namespace GGsDB
+namespace GGsDB.Models
 {
     public abstract class Product
     {
+        public int Id{get; set;}
         public decimal Cost{get; set;}
         public string Name{get; set;}
-        public int Id{get; set;}
+        
     }
 }
