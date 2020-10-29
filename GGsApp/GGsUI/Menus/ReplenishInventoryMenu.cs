@@ -8,9 +8,9 @@ namespace GGsUI.Menus
     {
         private string userInput;
         private bool showMenu = true;
-        private IRepository repo;
+        private IManagerRepo repo;
 
-        public ReplenishInventoryMenu(IRepository repo) {
+        public ReplenishInventoryMenu(IManagerRepo repo) {
             this.repo = repo;
         }
         public void Start()
@@ -26,12 +26,12 @@ namespace GGsUI.Menus
                     {
                         case "1":
                             VideoGame newGame = AddVideoGame();
-                            repo.AddProductAsync(newGame);
+                            // repo.AddProductAsync(newGame);
                             break;
                         case "2":
                             GameConsole newGameConsole = AddGameConsole();
-                            repo = new GameConsoleRepo();
-                            repo.AddProductAsync(newGameConsole);
+                            // repo = new GameConsoleRepo();
+                            // repo.AddProductAsync(newGameConsole);
                             break;
                         case "0":
                             showMenu = false;

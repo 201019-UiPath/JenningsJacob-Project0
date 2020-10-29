@@ -7,7 +7,7 @@ namespace GGsUI.Menus
     {  
         private string userInput;
         private bool showMenu = true;
-        private ReplenishInventoryMenu repMenu = new ReplenishInventoryMenu(new VideoGameRepo());
+        // private ReplenishInventoryMenu repMenu = new ReplenishInventoryMenu(new VideoGameRepo());
         public void Start()
         {
             do {
@@ -20,7 +20,7 @@ namespace GGsUI.Menus
                 switch (userInput)
                 {
                     case "1":
-                        repMenu.Start();
+                        // repMenu.Start();
                         showMenu = false;
                         break;
                     case "2":

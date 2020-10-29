@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GGsDB\GGsDB.csproj" />
+    <ProjectReference Include="..\GGsLib\GGsLib.csproj" />
   </ItemGroup>
 
   <ItemGroup>
