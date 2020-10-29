@@ -1,5 +1,6 @@
 using System;
 using GGsDB;
+using GGsDB.Models;
 
 namespace GGsUI.Menus
 {
