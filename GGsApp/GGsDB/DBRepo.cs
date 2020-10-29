@@ -14,6 +14,13 @@ namespace GGsDB
         {
             this.context = context;
         }
+
+        public void AddCustomerAsync(Customer customer)
+        {
+            context.Customers.AddAsync(customer);
+            context.SaveChangesAsync();
+        }
+
         public void AddVideoGameAsync(VideoGame videoGame)
         {
             context.VideoGames.AddAsync(videoGame);

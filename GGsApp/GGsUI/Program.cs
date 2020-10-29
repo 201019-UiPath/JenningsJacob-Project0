@@ -1,5 +1,6 @@
 ﻿using System;
 using GGsUI.Menus;
+using GGsDB;
 
 namespace GGsUI
 {
@@ -11,7 +12,7 @@ namespace GGsUI
 
             // IMenu menu = new CustomerMainMenu();
             
-            IMenu menu = new ManagerMenu();
+            IMenu menu = new MainMenu(new GGsContext());
             menu.Start();
 
         }

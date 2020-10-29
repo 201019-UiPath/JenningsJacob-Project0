@@ -15,5 +15,10 @@ namespace GGsLib
             Customer customer = repo.GetCustomerByEmail(email);
             return customer;
         }
+        public void AddCustomer(Customer customer)
+        {
+            // TODO: Add business logic to verify new customer
+            repo.AddCustomerAsync(customer);
+        }
     }
 }

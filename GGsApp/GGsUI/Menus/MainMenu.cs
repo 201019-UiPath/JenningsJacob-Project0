@@ -8,12 +8,14 @@ namespace GGsUI.Menus
         private string userInput;
         private CustomerLoginMenu customerLoginMenu;
         private ManagerLoginMenu managerLoginMenu;
+        private CustomerSignUpMenu customerSignUpMenu;
 
         public MainMenu(GGsContext context)
         {
             // TODO: add messaging service
             this.customerLoginMenu = new CustomerLoginMenu(new DBRepo(context));
             // this.managerLoginMenu = new ManagerLoginMenu(new DBRepo(context));
+            this.customerSignUpMenu = new CustomerSignUpMenu(new DBRepo(context));
         }
         public void Start()
         {
@@ -38,7 +40,7 @@ namespace GGsUI.Menus
                         // TODO: Login manager
                         break;
                     case "3":
-                        // TODO: customer sign up menu
+                        customerSignUpMenu.Start();
                         break;
                     case "4":
                         // TODO: manager sign up menu

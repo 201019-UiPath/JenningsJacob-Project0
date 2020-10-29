@@ -1,4 +1,5 @@
 using System;
+using GGsDB;
 
 namespace GGsUI.Menus
 {
@@ -8,8 +9,13 @@ namespace GGsUI.Menus
     public class CustomerMainMenu:IMenu
     {
         private string userInput;
+        private ICustomerRepo repo;
         private bool showMenu = true;
         private IMenu orderMenu = new PlaceOrderMenu();
+        public CustomerMainMenu(ICustomerRepo repo)
+        {
+            this.repo = repo;
+        }
         public void Start(){
             
             do {
@@ -23,13 +29,11 @@ namespace GGsUI.Menus
                 
                 switch(userInput) {
                     case "1":
-                        // Console.Clear();
                         orderMenu.Start();
                         showMenu = false;
                         break;
                     case "2":
-                        IMenu HistoryMenu = new OrderHistoryMenu();
-                        HistoryMenu.Start();
+                        // TODO: view order history
                         break;
                     case "3":
                         Console.WriteLine("Exiting");
