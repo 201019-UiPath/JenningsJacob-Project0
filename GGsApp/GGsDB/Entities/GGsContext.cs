@@ -249,7 +249,17 @@ namespace GGsDB.Entities
                     .HasColumnName("cost")
                     .HasColumnType("numeric(6,2)");
 
+                entity.Property(e => e.Esrb)
+                    .HasColumnName("esrb")
+                    .HasMaxLength(3);
+
+                entity.Property(e => e.Genre)
+                    .HasColumnName("genre")
+                    .HasMaxLength(50);
+
                 entity.Property(e => e.Inventoryid).HasColumnName("inventoryid");
+
+                entity.Property(e => e.Isdigitaledition).HasColumnName("isdigitaledition");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -258,7 +268,13 @@ namespace GGsDB.Entities
 
                 entity.Property(e => e.Orderid).HasColumnName("orderid");
 
+                entity.Property(e => e.Platform)
+                    .HasColumnName("platform")
+                    .HasMaxLength(50);
+
                 entity.Property(e => e.Prodtype).HasColumnName("prodtype");
+
+                entity.Property(e => e.Storage).HasColumnName("storage");
 
                 entity.HasOne(d => d.Inventory)
                     .WithMany(p => p.Products)

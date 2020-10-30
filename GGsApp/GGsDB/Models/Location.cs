@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace GGsDB.Models
 {
     public class Location
@@ -7,6 +9,7 @@ namespace GGsDB.Models
         public string City{get; set;}
         public string State{get; set;}
         public int ZipCode{get; set;}
+        public List<Customer> Customers {get; set;}
         public void PrintFullAddress(){
             System.Console.WriteLine($"{Street}, {City}, {State}, {ZipCode}");
         }
