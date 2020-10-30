@@ -22,6 +22,7 @@ namespace GGsUI.Menus
             try{
                 customerService.GetCustomerByEmail(email);
             } catch(NullReferenceException e) {
+                // TODO: use serilog to log exception
                 Console.WriteLine("This email is incorrect, please try again");
             }
             

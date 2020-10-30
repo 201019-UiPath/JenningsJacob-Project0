@@ -29,7 +29,7 @@ namespace GGsDB
 
         public Customer GetCustomerByEmail(string email)
         {
-            return (Customer) context.Customers.Where(x => x.Email == email);
+            return (Customer) context.Customers.Single(x => x.Email == email);
         }
 
     }
