@@ -1,10 +1,10 @@
--- drop table products
--- drop table orders
--- drop table customers
--- drop table locations
--- drop table managers
--- drop table inventories
--- drop table productype
+-- drop table products;
+-- drop table orders;
+-- drop table customers;
+-- drop table locations;
+-- drop table managers;
+-- drop table inventories;
+-- drop table producttype;
 -- creating the type of product --
 create table producttype
 (
@@ -16,8 +16,8 @@ create table producttype
 create table inventories
 (
     id serial primary key,
-    city varchar(2) not null,
-    state varchar(50) not null
+    city varchar(50) not null,
+    state varchar(2) not null
 );
 
 -- creating managers table --
@@ -107,8 +107,17 @@ insert into products (cost, name, prodtype, inventoryId, orderId) values
 (59.99, 'Cyberpunk 2077', 1, 1, 1),
 (400.00, 'PS5', 2, 1, 1),
 (59.99, 'Call of Duty', 1, 1, 2),
-(400.00, 'PC', 2, 2);
+(400.00, 'PC', 2, 2, 3);
 
+alter table products
+drop column storage;
+alter table products
+add storage int;
 
+update products
+set storage = 1, isDigitalEdition = true
+where id = 4;
 
-
+select * from producttype;
+alter table products
+add isDigitalEdition boolean 
