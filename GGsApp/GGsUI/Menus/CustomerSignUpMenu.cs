@@ -21,12 +21,11 @@ namespace GGsUI.Menus
         {
             Console.WriteLine("Thank you for signing up, please fill in the following information");
             Customer newCustomer = GetCustomerInfo();
-            
+            customerService.AddCustomer(newCustomer);
         }
 
         public Customer GetCustomerInfo()
         {
-            // TODO: get shipping address
             Customer customer = new Customer();
             Console.Write("Enter your first name:\t");
             customer.FirstName = Console.ReadLine();
@@ -37,8 +36,24 @@ namespace GGsUI.Menus
             customer.Email = Console.ReadLine();
             Console.Write("Enter your age:\t\t");
             customer.Age = Int32.Parse(Console.ReadLine());
+            customer.Location = GetLocationInfo();
             
             return customer;
+        }
+
+        public Location GetLocationInfo()
+        {
+            Location location = new Location();
+            Console.Write("Enter your street address:\t");
+            location.Street = Console.ReadLine();
+            Console.Write("Enter your city:\t");
+            location.City = Console.ReadLine();
+            Console.Write("Enter your state acronym (e.g. CA):\t");
+            location.State = Console.ReadLine();
+            Console.Write("Enter your zip code:\t\t");
+            location.ZipCode = Int32.Parse(Console.ReadLine());
+
+            return location;
         }
     }
 }

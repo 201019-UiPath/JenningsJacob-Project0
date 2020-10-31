@@ -1,6 +1,9 @@
 using GGsDB.Models;
+using GGsDB.Entities;
+using GGsDB.Mappers;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace GGsDB
 {
@@ -9,21 +12,30 @@ namespace GGsDB
     /// </summary>
     public class DBRepo : IVideoGameRepo, IManagerRepo, ICustomerRepo
     {
-        private GGsContext context;
-        public DBRepo(GGsContext context)
+        private readonly GGsContext context;
+        private readonly IMapper mapper;
+        public DBRepo(GGsContext context, IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
-        public void AddCustomerAsync(Customer customer)
+        public async void AddCustomerAsync(Customer customer)
         {
-            context.Customers.AddAsync(customer);
-            context.SaveChangesAsync();
+            try
+            {
+                context.Customers.Add(mapper.ParseCustomer(customer));
+                await context.SaveChangesAsync();
+            } catch (Exception e)
+            {
+                Console.WriteLine("Could not add customer");
+                Console.WriteLine(e.Message);
+            }
         }
 
         public void AddVideoGameAsync(VideoGame videoGame)
         {
-            context.VideoGames.AddAsync(videoGame);
+            context.Products.AddAsync(mapper.ParseVideoGame(videoGame));
             context.SaveChangesAsync();
         }
 

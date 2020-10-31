@@ -35,7 +35,7 @@ namespace GGsDB.Entities
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-                var connectionString = configuration.GetConnectionString("HerosDB");
+                var connectionString = configuration.GetConnectionString("GGsDB");
                 optionsBuilder.UseNpgsql(connectionString);
             }
         }

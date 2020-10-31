@@ -6,6 +6,7 @@ namespace GGsDB.Mappers
 {
     public interface IProductMapper
     {
-        ICollection<Products> ParseProducts(List<VideoGame> VideoGames, List<GameConsole> GameConsoles);
+        ICollection<Products> ParseProducts(List<Product> products);
+        List<Product> ParseProducts(ICollection<Products> products);
     }
 }

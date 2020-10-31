@@ -103,6 +103,28 @@ namespace GGsDB.Mappers
             return allGameConsoles;
         }
 
+        public Inventory ParseInventory(Inventories inventory)
+        {
+            return new Inventory()
+            {
+                Id = inventory.Id,
+                City = inventory.City,
+                State = inventory.State,
+                Products = ParseProducts(inventory.Products)
+            };
+        }
+
+        public Inventories ParseInventory(Inventory inventory)
+        {
+            return new Inventories()
+            {
+                Id = inventory.Id,
+                City = inventory.City,
+                State = inventory.State,
+                Products = ParseProducts(inventory.Products)
+            };
+        }
+
         public Location ParseLocation(Locations location)
         {
             return new Location()
@@ -132,19 +154,22 @@ namespace GGsDB.Mappers
                 Id = order.Id,
                 CustomerId = order.Customerid,
                 Customer = ParseCustomer(order.Customer),
-                // Products = ParseProducts(order.Products)
+                Products = ParseProducts(order.Products)
             };
         }
 
         public Orders ParseOrder(Order order)
         {
-            return new Orders()
-            {
-                Id = order.Id,
-                Customerid = order.CustomerId,
-                Customer = ParseCustomer(order.Customer)
-                // Parse products
-            };
+            // if (order == null)
+            //     return null;
+            // else
+                return new Orders()
+                {
+                    Id = order.Id,
+                    Customerid = order.CustomerId,
+                    Customer = ParseCustomer(order.Customer),
+                    Products = ParseProducts(order.Products)
+                };
         }
 
         public List<Order> ParseOrder(ICollection<Orders> orders)
@@ -165,6 +190,32 @@ namespace GGsDB.Mappers
                 allOrders.Add(ParseOrder(order));
             }
             return allOrders;
+        }
+
+        public ICollection<Products> ParseProducts(List<Product> products)
+        {
+            ICollection<Products> allProducts = new List<Products>();
+            foreach (var p in products)
+            {
+                if (p is VideoGame)
+                    allProducts.Add(ParseVideoGame((VideoGame) p));
+                if (p is GameConsole)
+                    allProducts.Add(ParseGameConsole((GameConsole) p));
+            }
+            return allProducts;
+        }
+
+        public List<Product> ParseProducts(ICollection<Products> products)
+        {
+            List<Product> allProducts = new List<Product>();
+            foreach (var p in products)
+            {
+                if (p.Prodtype == 1)
+                    allProducts.Add(ParseVideoGame(p));
+                if (p.Prodtype == 2)
+                    allProducts.Add(ParseGameConsole(p));
+            }
+            return allProducts;
         }
 
         public VideoGame ParseVideoGame(Products product)

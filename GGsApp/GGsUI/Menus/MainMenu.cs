@@ -1,5 +1,7 @@
 using System;
 using GGsDB;
+using GGsDB.Mappers;
+using GGsDB.Entities;
 
 namespace GGsUI.Menus
 {
@@ -10,12 +12,12 @@ namespace GGsUI.Menus
         private ManagerLoginMenu managerLoginMenu;
         private CustomerSignUpMenu customerSignUpMenu;
 
-        public MainMenu(GGsContext context)
+        public MainMenu(GGsContext context, IMapper mapper)
         {
             // TODO: add messaging service
-            this.customerLoginMenu = new CustomerLoginMenu(new DBRepo(context));
+            this.customerLoginMenu = new CustomerLoginMenu(new DBRepo(context, mapper));
             // this.managerLoginMenu = new ManagerLoginMenu(new DBRepo(context));
-            this.customerSignUpMenu = new CustomerSignUpMenu(new DBRepo(context));
+            this.customerSignUpMenu = new CustomerSignUpMenu(new DBRepo(context, mapper));
         }
         public void Start()
         {
