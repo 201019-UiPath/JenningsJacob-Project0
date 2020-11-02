@@ -85,6 +85,5 @@ namespace GGsDB
             }
             return allProducts;
         }
-
     }
 }

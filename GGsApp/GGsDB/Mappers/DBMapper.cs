@@ -129,7 +129,7 @@ namespace GGsDB.Mappers
                 State = inventory.State,
                 Products = ParseProducts(inventory.Products)
             };
-        }
+        } 
 
         public Location ParseLocation(Locations location)
         {
