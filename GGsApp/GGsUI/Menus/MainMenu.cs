@@ -35,7 +35,6 @@ namespace GGsUI.Menus
                         Console.WriteLine("Exiting application. Have a good day!");
                         break;
                     case "1":
-                        // IMenu loginMenu = new LoginMenu();
                         customerLoginMenu.Start();
                         break;
                     case "2":
