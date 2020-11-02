@@ -13,6 +13,8 @@ namespace GGsDB.Mappers
         /// <returns></returns>
         public Customer ParseCustomer(Customers customer)
         {
+            if (customer == null)
+                return new Customer();
             return new Customer()
             {
                 Id = customer.Id,
@@ -105,6 +107,8 @@ namespace GGsDB.Mappers
 
         public Inventory ParseInventory(Inventories inventory)
         {
+            if (inventory == null)
+                return null;
             return new Inventory()
             {
                 Id = inventory.Id,
@@ -116,6 +120,8 @@ namespace GGsDB.Mappers
 
         public Inventories ParseInventory(Inventory inventory)
         {
+            if (inventory == null)
+                return null;
             return new Inventories()
             {
                 Id = inventory.Id,
@@ -127,6 +133,8 @@ namespace GGsDB.Mappers
 
         public Location ParseLocation(Locations location)
         {
+            if(location == null)
+                return null;
             return new Location()
             {
                 Street = location.Street,

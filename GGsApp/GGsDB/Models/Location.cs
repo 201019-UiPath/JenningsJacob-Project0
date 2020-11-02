@@ -4,6 +4,10 @@ namespace GGsDB.Models
 {
     public class Location
     {
+        public Location()
+        {
+            Customers = new List<Customer>();
+        }
         public int Id {get; set;}
         public string Street{get; set;}
         public string City{get; set;}

@@ -1,5 +1,6 @@
 using System;
 using GGsDB;
+using GGsLib;
 
 namespace GGsUI.Menus
 {
@@ -10,11 +11,14 @@ namespace GGsUI.Menus
     {
         private string userInput;
         private ICustomerRepo repo;
+        private CustomerService customerService;
         private bool showMenu = true;
-        private IMenu orderMenu = new PlaceOrderMenu();
+        private IMenu orderMenu;
         public CustomerMainMenu(ICustomerRepo repo)
         {
             this.repo = repo;
+            this.customerService = new CustomerService(repo);
+            this.orderMenu = new PlaceOrderMenu((IInventoryRepo) repo);
         }
         public void Start(){
             

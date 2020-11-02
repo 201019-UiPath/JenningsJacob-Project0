@@ -1,4 +1,6 @@
 using System;
+using GGsDB;
+using GGsDB.Models;
 
 namespace GGsUI.Menus
 {
@@ -9,38 +11,46 @@ namespace GGsUI.Menus
     {
         private string userInput;
         private bool showMenu = true;
-        public void Start() {
-            do
+        private IInventoryRepo repo;
+        private InventoryMenu inventoryMenu;
+        public PlaceOrderMenu(IInventoryRepo repo)
+        {
+            this.repo = repo;
+            this.inventoryMenu = new InventoryMenu(repo);
+        }
+        public void Start() {  
+            Console.WriteLine("\nIn order to place an order, please select one of our locations");
+            foreach (var i in repo.GetAllInventories())
             {
-                Console.WriteLine("\nIn order to place an order, please select one of our locations:");
-                // TODO: replace hardcoded locations with persisted data
-                //       probbaly want to make a foreach loop to display a menu item for each location
-                // Options
-                Console.WriteLine("1.\tOakland, California");
-                Console.WriteLine("2.\tSeattle, Washington");
-                Console.WriteLine("3.\tLas Vegas, Nevada");
-                Console.WriteLine("4.\tChicago, Illinois");
-                Console.WriteLine("5.\tMiami, Florida");
-                
-                userInput = Console.ReadLine();
+                Console.WriteLine($"{i.Id}.\t{i.City}, {i.State}");
+            }
+            userInput = Console.ReadLine();
+            printProducts();
+        }
 
-                switch (userInput)
+        public void printProducts()
+        {
+            int counter = 1;
+
+            Console.WriteLine("\nVideo Games:");
+            foreach (var p in repo.GetAllProducts(Int32.Parse(userInput)))
+            {
+                if (p is VideoGame) 
                 {
-                    case "1":
-                        showMenu = false;
-                        break;
-                    case "2":
-                        break;
-                    case "3":
-                        break;
-                    case "4":
-                        break;
-                    case "5":
-                        break;
-                    default:
-                        break;
+                    VideoGame vg = (VideoGame) p;
+                    Console.WriteLine($"{counter++}.\t{vg.Name}\t{vg.Cost}\t{vg.Genre}\t{vg.Platform}");
                 }
-            } while (showMenu);            
+            }
+            Console.WriteLine("\n Game Consoles:");
+            counter = 1;
+            foreach (var p in repo.GetAllProducts(Int32.Parse(userInput)))
+            {
+                if (p is GameConsole) 
+                {
+                    GameConsole gc = (GameConsole) p;
+                    Console.WriteLine($"{counter++}.\t{gc.Name}\t{gc.Cost}\t{gc.Storage}TB");
+                }
+            }
         }
     }
 }

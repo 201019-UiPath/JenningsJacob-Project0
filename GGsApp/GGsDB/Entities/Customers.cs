@@ -7,6 +7,12 @@ namespace GGsDB.Entities
     {
         public Customers()
         {
+            Id = -1;
+            Firstname = "";
+            Lastname = "";
+            Email = "";
+            Age = 0;
+            Location = new Locations();
             Orders = new HashSet<Orders>();
         }
 

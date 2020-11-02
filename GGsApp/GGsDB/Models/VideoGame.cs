@@ -10,6 +10,7 @@ namespace GGsDB.Models
         {
             Genre = "";
             Platform = "";
+            ESRB = "";
         }
     }
 }
