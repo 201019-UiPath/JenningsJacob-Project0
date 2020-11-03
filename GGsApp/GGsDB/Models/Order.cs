@@ -1,16 +1,16 @@
+using System;
 using System.Collections.Generic;
-
 namespace GGsDB.Models
 {
     public class Order
     {
-        public Order()
-        {
-            Products = new List<Product>();
-        }
-        public int Id {get; set;}
-        public int? CustomerId {get; set;}
-        public Customer Customer {get; set;}
-        public List<Product> Products {get; set;}
+        public int id {get; set;}
+        public int userId {get; set;}
+        public User user {get; set;}
+        public int locationId {get; set;}
+        public Location location {get; set;}
+        public DateTime orderDate {get; set;}
+        public decimal totalCost {get; set;}
+        public List<LineItem> lineItems {get; set;}
     }
 }

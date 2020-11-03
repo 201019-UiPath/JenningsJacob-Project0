@@ -1,5 +1,5 @@
-using GGsDB.Models;
 using GGsDB.Entities;
+using GGsDB.Models;
 using System.Collections.Generic;
 
 namespace GGsDB.Mappers
@@ -10,6 +10,5 @@ namespace GGsDB.Mappers
         Orders ParseOrder(Order order);
         List<Order> ParseOrder(ICollection<Orders> orders);
         ICollection<Orders> ParseOrder(List<Order> orders);
-        
     }
 }

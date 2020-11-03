@@ -1,7 +1,8 @@
 ﻿using System;
 using GGsUI.Menus;
-using GGsDB.Mappers;
 using GGsDB.Entities;
+using GGsDB.Mappers;
+using GGsDB.Repos;
 
 namespace GGsUI
 {
@@ -9,12 +10,10 @@ namespace GGsUI
     {
         static void Main(string[] args)
         {
-            // IMenu menu = new WelcomeMenu();
-
-            // IMenu menu = new CustomerMainMenu();
-            
-            IMenu menu = new MainMenu(new GGsContext(), new DBMapper());
-            menu.Start();
+            GGsContext context = new GGsContext();
+            DBMapper mapper = new DBMapper();
+            IMenu main = new WelcomeMenu(context, mapper, new DBRepo(context, mapper), new DBRepo(context, mapper), new DBRepo(context, mapper));
+            main.Start();
         }
     }
 }

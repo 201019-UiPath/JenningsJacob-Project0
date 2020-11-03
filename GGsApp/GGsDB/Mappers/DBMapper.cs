@@ -6,269 +6,459 @@ namespace GGsDB.Mappers
 {
     public class DBMapper : IMapper
     {
-        /// <summary>
-        /// Converts Entity Customer to Model Customer
-        /// </summary>
-        /// <param name="customer"></param>
-        /// <returns></returns>
-        public Customer ParseCustomer(Customers customer)
+        public Cart ParseCart(Carts cart)
         {
-            if (customer == null)
-                return new Customer();
-            return new Customer()
-            {
-                Id = customer.Id,
-                FirstName = customer.Firstname,
-                LastName = customer.Lastname,
-                Email = customer.Email,
-                Age = customer.Age,
-                LocationId = customer.Locationid,
-                Location = ParseLocation(customer.Location),
-                Orders = ParseOrder(customer.Orders)
+            if (cart == null)
+                return new Cart();
+            return new Cart(){
+                id = cart.Id,
+                userId = cart.Userid,
+                user = ParseUser(cart.User),
+                cartItems = ParseCartItem(cart.Cartitems)
             };
         }
 
-        public Customers ParseCustomer(Customer customer)
+        public Carts ParseCart(Cart cart)
         {
-            return new Customers()
-            {
-                Id = customer.Id,
-                Firstname = customer.FirstName,
-                Lastname = customer.LastName,
-                Email = customer.Email,
-                Age = customer.Age,
-                Locationid = customer.LocationId,
-                Location = ParseLocation(customer.Location),
-                Orders = ParseOrder(customer.Orders)
+            if (cart.Equals(null))
+                return new Carts();
+            return new Carts(){
+                Id = cart.id,
+                Userid = cart.userId,
+                User = ParseUser(cart.user),
+                Cartitems = ParseCartItem(cart.cartItems)
             };
         }
 
-        public List<Customer> ParseCustomer(List<Customers> customers)
+        public List<Cart> ParseCart(ICollection<Carts> carts)
         {
-            List<Customer> allCustomers = new List<Customer>();
-            foreach(var customer in customers)
+            if (carts == null)
+                return new List<Cart>();
+            List<Cart> allCarts = new List<Cart>();
+            foreach (var c in carts)
             {
-                allCustomers.Add(ParseCustomer(customer));
+                allCarts.Add(ParseCart(c));
             }
-            return allCustomers;
+            return allCarts;
         }
 
-        public ICollection<Customers> ParseCustomer(ICollection<Customer> customers)
+        public ICollection<Carts> ParseCart(List<Cart> carts)
         {
-            ICollection<Customers> allCustomers = new List<Customers>();
-            foreach(var customer in customers)
+            if (carts.Equals(null))
+                return new List<Carts>();
+            ICollection<Carts> allCarts = new List<Carts>();
+            foreach (var c in carts)
             {
-                allCustomers.Add(ParseCustomer(customer));
+                allCarts.Add(ParseCart(c));
             }
-            return allCustomers;
+            return allCarts;
         }
 
-        public GameConsole ParseGameConsole(Products product)
+        public CartItem ParseCartItem(Cartitems item)
         {
-            return new GameConsole(){
-                Id = product.Id,
-                Cost = product.Cost,
-                Name = product.Name,
-                Storage = product.Storage,
-                IsDigitalEdition = product.Isdigitaledition
+            if (item.Equals(null))
+                return new CartItem();
+            return new CartItem(){
+                id = item.Id,
+                cartId = item.Cartid,
+                videoGameId = item.Videogameid,
+                quantity = item.Quantity,
+                cart = ParseCart(item.Cart),
+                videoGame = ParseVideoGame(item.Videogame)
             };
         }
 
-        public Products ParseGameConsole(GameConsole product)
+        public Cartitems ParseCartItem(CartItem item)
         {
-            return new Products(){
-                Id = product.Id,
-                Cost = product.Cost,
-                Name = product.Name,
-                Storage = product.Storage,
-                Isdigitaledition = product.IsDigitalEdition
+            if (item.Equals(null))
+                return new Cartitems();
+            return new Cartitems(){
+                Id = item.id,
+                Cartid = item.cartId,
+                Videogameid = item.videoGameId,
+                Quantity = item.quantity,
+                Cart = ParseCart(item.cart),
+                Videogame = ParseVideoGame(item.videoGame)
             };
         }
 
-        public List<GameConsole> ParseGameConsole(ICollection<Products> products)
+        public List<CartItem> ParseCartItem(ICollection<Cartitems> item)
         {
-            List<GameConsole> allGameConsoles = new List<GameConsole>();
-            foreach(var gc in products)
+            if (item.Equals(null))
+                return new List<CartItem>();
+            List<CartItem> allItems = new List<CartItem>();
+            foreach(var i in item)
             {
-                allGameConsoles.Add(ParseGameConsole(gc));
+                allItems.Add(ParseCartItem(i));
             }
-            return allGameConsoles;
+            return allItems;
         }
 
-        public ICollection<Products> ParseGameConsole(List<GameConsole> products)
+        public ICollection<Cartitems> ParseCartItem(List<CartItem> item)
         {
-            ICollection<Products> allGameConsoles = new List<Products>();
-            foreach(var gc in products)
+            if (item.Equals(null))
+                return new List<Cartitems>();
+            ICollection<Cartitems> allItems = new List<Cartitems>();
+            foreach(var i in item)
             {
-                allGameConsoles.Add(ParseGameConsole(gc));
+                allItems.Add(ParseCartItem(i));
             }
-            return allGameConsoles;
+            return allItems;
         }
 
-        public Inventory ParseInventory(Inventories inventory)
+        public InventoryItem ParseInventoryItem(Inventoryitems item)
         {
-            if (inventory == null)
-                return null;
-            return new Inventory()
+            if (item.Equals(null))
+                return new InventoryItem();
+            return new InventoryItem()
             {
-                Id = inventory.Id,
-                City = inventory.City,
-                State = inventory.State,
-                Products = ParseProducts(inventory.Products)
+                id = item.Id,
+                videoGameId = item.Videogameid,
+                locationId = item.Locationid,
+                quantity = item.Quantity,
+                videoGame = ParseVideoGame(item.Videogame),
+                location = ParseLocation(item.Location)
             };
         }
 
-        public Inventories ParseInventory(Inventory inventory)
+        public Inventoryitems ParseInventoryItem(InventoryItem item)
         {
-            if (inventory == null)
-                return null;
-            return new Inventories()
+            if (item.Equals(null))
+                return new Inventoryitems();
+            return new Inventoryitems()
             {
-                Id = inventory.Id,
-                City = inventory.City,
-                State = inventory.State,
-                Products = ParseProducts(inventory.Products)
+                Id = item.id,
+                Videogameid = item.videoGameId,
+                Locationid = item.locationId,
+                Quantity = item.quantity,
+                Videogame = ParseVideoGame(item.videoGame),
+                Location = ParseLocation(item.location)
             };
-        } 
+        }
+
+        public List<InventoryItem> ParseInventoryItem(ICollection<Inventoryitems> items)
+        {
+            if (items.Equals(null))
+                return new List<InventoryItem>();
+            List<InventoryItem> allItems = new List<InventoryItem>();
+            foreach (var item in items)
+            {
+                allItems.Add(ParseInventoryItem(item));
+            }
+            return allItems;
+        }
+
+        public ICollection<Inventoryitems> ParseInventoryItem(List<InventoryItem> items)
+        {
+            if (items.Equals(null))
+                return new List<Inventoryitems>();
+            ICollection<Inventoryitems> allItems = new List<Inventoryitems>();
+            foreach (var item in items)
+            {
+                allItems.Add(ParseInventoryItem(item));
+            }
+            return allItems;
+        }
+
+        public LineItem ParseLineItem(Lineitems item)
+        {
+            if (item.Equals(null))
+                return new LineItem();
+            return new LineItem()
+            {
+                id = item.Id,
+                orderId = item.Orderid,
+                videoGameId = item.Videogameid,
+                quantity = item.Quantity,
+                order = ParseOrder(item.Order),
+                videoGame = ParseVideoGame(item.Videogame),
+                price = item.Price
+            };
+        }
+
+        public Lineitems ParseLineItem(LineItem item)
+        {
+            if (item.Equals(null))
+                return new Lineitems();
+            return new Lineitems()
+            {
+                Id = item.id,
+                Orderid = item.orderId,
+                Videogameid = item.videoGameId,
+                Quantity = item.quantity,
+                Order = ParseOrder(item.order),
+                Videogame = ParseVideoGame(item.videoGame),
+                Price = item.price
+            };
+        }
+
+        public List<LineItem> ParseLineItem(ICollection<Lineitems> items)
+        {
+            if (items.Equals(null))
+                return new List<LineItem>();
+            List<LineItem> allItems = new List<LineItem>();
+            foreach (var item in items)
+            {
+                allItems.Add(ParseLineItem(item));
+            }
+            return allItems;
+        }
+
+        public ICollection<Lineitems> ParseLineItem(List<LineItem> items)
+        {
+            if (items.Equals(null))
+                return new List<Lineitems>();
+            ICollection<Lineitems> allItems = new List<Lineitems>();
+            foreach (var item in items)
+            {
+                allItems.Add(ParseLineItem(item));
+            }
+            return allItems;
+        }
 
         public Location ParseLocation(Locations location)
         {
-            if(location == null)
-                return null;
+            if (location == null)
+                return new Location();
             return new Location()
             {
-                Street = location.Street,
-                State = location.State,
-                City = location.City,
-                ZipCode = location.Zipcode
+                id = location.Id,
+                street = location.Street,
+                city = location.City,
+                state = location.State,
+                zipCode = location.Zipcode,
+                inventory = ParseInventoryItem(location.Inventoryitems)
             };
         }
 
         public Locations ParseLocation(Location location)
         {
+            if (location.Equals(null))
+                return new Locations();
             return new Locations()
             {
-                Street = location.Street,
-                State = location.State,
-                City = location.City,
-                Zipcode = location.ZipCode
+                Id = location.id,
+                Street = location.street,
+                City = location.city,
+                State = location.state,
+                Zipcode = location.zipCode,
+                Inventoryitems = ParseInventoryItem(location.inventory)
             };
+        }
+
+        public List<Location> ParseLocation(ICollection<Locations> locations)
+        {
+            if (locations.Equals(null))
+                return new List<Location>();
+            List<Location> allLocations = new List<Location>();
+            foreach(var l in locations)
+            {
+                allLocations.Add(ParseLocation(l));
+            }
+            return allLocations;
+        }
+
+        public ICollection<Locations> ParseLocation(List<Location> locations)
+        {
+            if (locations.Equals(null))
+                return new List<Locations>();
+            ICollection<Locations> allLocations = new List<Locations>();
+            foreach(var l in locations)
+            {
+                allLocations.Add(ParseLocation(l));
+            }
+            return allLocations;
         }
 
         public Order ParseOrder(Orders order)
         {
+            if (order.Equals(null))
+                return new Order();
             return new Order()
             {
-                Id = order.Id,
-                CustomerId = order.Customerid,
-                Customer = ParseCustomer(order.Customer),
-                Products = ParseProducts(order.Products)
+                id = order.Id,
+                userId = order.Userid,
+                locationId = order.Locationid,
+                orderDate = order.Orderdate,
+                totalCost = order.Totalcost,
+                user = ParseUser(order.User),
+                location = ParseLocation(order.Location),
+                lineItems = ParseLineItem(order.Lineitems)
             };
         }
 
         public Orders ParseOrder(Order order)
         {
-            // if (order == null)
-            //     return null;
-            // else
-                return new Orders()
-                {
-                    Id = order.Id,
-                    Customerid = order.CustomerId,
-                    Customer = ParseCustomer(order.Customer),
-                    Products = ParseProducts(order.Products)
-                };
+            if (order.Equals(null))
+                return new Orders();
+            return new Orders()
+            {
+                Id = order.id,
+                Userid = order.userId,
+                Locationid = order.locationId,
+                Orderdate = order.orderDate,
+                Totalcost = order.totalCost,
+                User = ParseUser(order.user),
+                Location = ParseLocation(order.location),
+                Lineitems = ParseLineItem(order.lineItems)
+            };
         }
 
         public List<Order> ParseOrder(ICollection<Orders> orders)
         {
+            if (orders.Equals(null))
+                return new List<Order>();
             List<Order> allOrders = new List<Order>();
-            foreach(var order in orders)
+            foreach (var o in orders)
             {
-                allOrders.Add(ParseOrder(order));
+                allOrders.Add(ParseOrder(o));
             }
             return allOrders;
         }
 
         public ICollection<Orders> ParseOrder(List<Order> orders)
         {
+            if (orders.Equals(null))
+                return new List<Orders>();
             ICollection<Orders> allOrders = new List<Orders>();
-            foreach(var order in orders)
+            foreach (var o in orders)
             {
-                allOrders.Add(ParseOrder(order));
+                allOrders.Add(ParseOrder(o));
             }
             return allOrders;
         }
 
-        public ICollection<Products> ParseProducts(List<Product> products)
+        public User ParseUser(Users user)
         {
-            ICollection<Products> allProducts = new List<Products>();
-            foreach (var p in products)
-            {
-                if (p is VideoGame)
-                    allProducts.Add(ParseVideoGame((VideoGame) p));
-                if (p is GameConsole)
-                    allProducts.Add(ParseGameConsole((GameConsole) p));
-            }
-            return allProducts;
+            if (user.Equals(null))
+                return new User();
+            if (user.Type.Equals("Customer"))
+                return new User()
+                {
+                    id = user.Id,
+                    name = user.Name,
+                    email = user.Email,
+                    locationId = user.Locationid,
+                    type = User.userType.Customer,
+                    cart = ParseCart(user.Carts),
+                    location = ParseLocation(user.Location),
+                    orders = ParseOrder(user.Orders)
+                };
+            else
+                return new User()
+                {
+                    id = user.Id,
+                    name = user.Name,
+                    email = user.Email,
+                    locationId = user.Locationid,
+                    type = User.userType.Manager,
+                    cart = ParseCart(user.Carts),
+                    location = ParseLocation(user.Location),
+                    orders = ParseOrder(user.Orders)
+                };
         }
 
-        public List<Product> ParseProducts(ICollection<Products> products)
+        public Users ParseUser(User user)
         {
-            List<Product> allProducts = new List<Product>();
-            foreach (var p in products)
-            {
-                if (p.Prodtype == 1)
-                    allProducts.Add(ParseVideoGame(p));
-                if (p.Prodtype == 2)
-                    allProducts.Add(ParseGameConsole(p));
-            }
-            return allProducts;
+            if (user.Equals(null))
+                return new Users();
+            return new Users()
+                {
+                    Id = user.id,
+                    Name = user.name,
+                    Email = user.email,
+                    Locationid = user.locationId,
+                    Type = user.type.ToString(),
+                    Carts = ParseCart(user.cart),
+                    Location = ParseLocation(user.location),
+                    Orders = ParseOrder(user.orders)
+                };
         }
 
-        public VideoGame ParseVideoGame(Products product)
+        public List<User> ParseUser(ICollection<Users> users)
         {
-            return new VideoGame(){
-                Id = product.Id,
-                Cost = product.Cost,
-                Name = product.Name,
-                Genre = product.Genre,
-                Platform = product.Platform,
-                ESRB = product.Esrb
+            if (users.Equals(null))
+                return new List<User>();
+            List<User> allUsers = new List<User>();
+            foreach (var u in users)
+            {
+                allUsers.Add(ParseUser(u));
+            }
+            return allUsers;
+        }
+
+        public ICollection<Users> ParseUser(List<User> users)
+        {
+            if (users.Equals(null))
+                return new List<Users>();
+            ICollection<Users> allUsers = new List<Users>();
+            foreach (var u in users)
+            {
+                allUsers.Add(ParseUser(u));
+            }
+            return allUsers;
+        }
+
+        public VideoGame ParseVideoGame(Videogames videogame)
+        {
+            if (videogame.Equals(null))
+                return new VideoGame();
+            return new VideoGame()
+            {
+                id = videogame.Id,
+                name = videogame.Name,
+                cost = videogame.Cost,
+                platform = videogame.Platform,
+                esrb = videogame.Esrb
             };
         }
 
-        public Products ParseVideoGame(VideoGame product)
+        public Videogames ParseVideoGame(VideoGame videogame)
         {
-            return new Products(){
-                Id = product.Id,
-                Cost = product.Cost,
-                Name = product.Name,
-                Genre = product.Genre,
-                Platform = product.Platform,
-                Esrb = product.ESRB,
-                Prodtype = 1
+            if (videogame.Equals(null))
+                return new Videogames();
+            return new Videogames()
+            {
+                Id = videogame.id,
+                Name = videogame.name,
+                Cost = videogame.cost,
+                Platform = videogame.platform,
+                Esrb = videogame.esrb
             };
         }
 
-        public List<VideoGame> ParseVideoGame(ICollection<Products> products)
+        public List<VideoGame> ParseVideoGame(ICollection<Videogames> videogames)
         {
-            List<VideoGame> allVideoGames= new List<VideoGame>();
-            foreach (var vg in products)
+            if (videogames.Equals(null))
+                return new List<VideoGame>();
+            List<VideoGame> allVideoGames = new List<VideoGame>();
+            foreach (var vg in videogames)
             {
                 allVideoGames.Add(ParseVideoGame(vg));
             }
             return allVideoGames;
         }
 
-        public ICollection<Products> ParseVideoGame(List<VideoGame> products)
+        public ICollection<Videogames> ParseVideoGame(List<VideoGame> videogames)
         {
-            ICollection<Products> allVideoGames = new List<Products>();
-            foreach (var vg in products)
+            if (videogames.Equals(null))
+                return new List<Videogames>();
+            ICollection<Videogames> allVideoGames = new List<Videogames>();
+            foreach (var vg in videogames)
             {
                 allVideoGames.Add(ParseVideoGame(vg));
             }
             return allVideoGames;
+        }
+
+        Cart ICartMapper.ParseCart(Carts cart)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        List<Cart> ICartMapper.ParseCart(ICollection<Carts> carts)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

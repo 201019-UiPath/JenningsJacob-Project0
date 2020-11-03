@@ -17,18 +17,19 @@ namespace GGsDB.Entities
         {
         }
 
-        public virtual DbSet<Customers> Customers { get; set; }
-        public virtual DbSet<Inventories> Inventories { get; set; }
+        public virtual DbSet<Cartitems> Cartitems { get; set; }
+        public virtual DbSet<Carts> Carts { get; set; }
+        public virtual DbSet<Inventoryitems> Inventoryitems { get; set; }
+        public virtual DbSet<Lineitems> Lineitems { get; set; }
         public virtual DbSet<Locations> Locations { get; set; }
-        public virtual DbSet<Managers> Managers { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<PgStatStatements> PgStatStatements { get; set; }
-        public virtual DbSet<Products> Products { get; set; }
-        public virtual DbSet<Producttype> Producttype { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Videogames> Videogames { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if(!(optionsBuilder.IsConfigured))
+            if (!optionsBuilder.IsConfigured)
             {
                 var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -64,56 +65,82 @@ namespace GGsDB.Entities
                 .HasPostgresExtension("uuid-ossp")
                 .HasPostgresExtension("xml2");
 
-            modelBuilder.Entity<Customers>(entity =>
+            modelBuilder.Entity<Cartitems>(entity =>
             {
-                entity.ToTable("customers");
-
-                entity.HasIndex(e => e.Email)
-                    .HasName("customers_email_key")
-                    .IsUnique();
+                entity.ToTable("cartitems");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Age).HasColumnName("age");
+                entity.Property(e => e.Cartid).HasColumnName("cartid");
 
-                entity.Property(e => e.Email)
-                    .IsRequired()
-                    .HasColumnName("email")
-                    .HasMaxLength(100);
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
 
-                entity.Property(e => e.Firstname)
-                    .IsRequired()
-                    .HasColumnName("firstname")
-                    .HasMaxLength(50);
+                entity.Property(e => e.Videogameid).HasColumnName("videogameid");
 
-                entity.Property(e => e.Lastname)
-                    .IsRequired()
-                    .HasColumnName("lastname")
-                    .HasMaxLength(50);
+                entity.HasOne(d => d.Cart)
+                    .WithMany(p => p.Cartitems)
+                    .HasForeignKey(d => d.Cartid)
+                    .HasConstraintName("cartitems_cartid_fkey");
+
+                entity.HasOne(d => d.Videogame)
+                    .WithMany(p => p.Cartitems)
+                    .HasForeignKey(d => d.Videogameid)
+                    .HasConstraintName("cartitems_videogameid_fkey");
+            });
+
+            modelBuilder.Entity<Carts>(entity =>
+            {
+                entity.ToTable("carts");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Userid).HasColumnName("userid");
+            });
+
+            modelBuilder.Entity<Inventoryitems>(entity =>
+            {
+                entity.ToTable("inventoryitems");
+
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Locationid).HasColumnName("locationid");
 
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.Property(e => e.Videogameid).HasColumnName("videogameid");
+
                 entity.HasOne(d => d.Location)
-                    .WithMany(p => p.Customers)
+                    .WithMany(p => p.Inventoryitems)
                     .HasForeignKey(d => d.Locationid)
-                    .HasConstraintName("customers_locationid_fkey");
+                    .HasConstraintName("inventoryitems_locationid_fkey");
+
+                entity.HasOne(d => d.Videogame)
+                    .WithMany(p => p.Inventoryitems)
+                    .HasForeignKey(d => d.Videogameid)
+                    .HasConstraintName("inventoryitems_videogameid_fkey");
             });
 
-            modelBuilder.Entity<Inventories>(entity =>
+            modelBuilder.Entity<Lineitems>(entity =>
             {
-                entity.ToTable("inventories");
+                entity.ToTable("lineitems");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.City)
-                    .IsRequired()
-                    .HasColumnName("city")
-                    .HasMaxLength(50);
+                entity.Property(e => e.Orderid).HasColumnName("orderid");
 
-                entity.Property(e => e.State)
-                    .IsRequired()
-                    .HasColumnName("state")
-                    .HasMaxLength(2);
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.Property(e => e.Videogameid).HasColumnName("videogameid");
+
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.Lineitems)
+                    .HasForeignKey(d => d.Orderid)
+                    .HasConstraintName("lineitems_orderid_fkey");
+
+                entity.HasOne(d => d.Videogame)
+                    .WithMany(p => p.Lineitems)
+                    .HasForeignKey(d => d.Videogameid)
+                    .HasConstraintName("lineitems_videogameid_fkey");
             });
 
             modelBuilder.Entity<Locations>(entity =>
@@ -123,48 +150,19 @@ namespace GGsDB.Entities
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.City)
-                    .IsRequired()
                     .HasColumnName("city")
                     .HasMaxLength(50);
 
                 entity.Property(e => e.State)
-                    .IsRequired()
                     .HasColumnName("state")
-                    .HasMaxLength(2);
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.Street)
-                    .IsRequired()
                     .HasColumnName("street")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Zipcode).HasColumnName("zipcode");
-            });
-
-            modelBuilder.Entity<Managers>(entity =>
-            {
-                entity.ToTable("managers");
-
-                entity.HasIndex(e => e.Email)
-                    .HasName("managers_email_key")
-                    .IsUnique();
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Age).HasColumnName("age");
-
-                entity.Property(e => e.Email)
-                    .IsRequired()
-                    .HasColumnName("email")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.Firstname)
-                    .IsRequired()
-                    .HasColumnName("firstname")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Lastname)
-                    .IsRequired()
-                    .HasColumnName("lastname")
+                entity.Property(e => e.Zipcode)
+                    .HasColumnName("zipcode")
                     .HasMaxLength(50);
             });
 
@@ -174,12 +172,25 @@ namespace GGsDB.Entities
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Customerid).HasColumnName("customerid");
+                entity.Property(e => e.Locationid).HasColumnName("locationid");
 
-                entity.HasOne(d => d.Customer)
+                entity.Property(e => e.Orderdate).HasColumnName("orderdate");
+
+                entity.Property(e => e.Totalcost)
+                    .HasColumnName("totalcost")
+                    .HasColumnType("numeric(8,2)");
+
+                entity.Property(e => e.Userid).HasColumnName("userid");
+
+                entity.HasOne(d => d.Location)
                     .WithMany(p => p.Orders)
-                    .HasForeignKey(d => d.Customerid)
-                    .HasConstraintName("orders_customerid_fkey");
+                    .HasForeignKey(d => d.Locationid)
+                    .HasConstraintName("orders_locationid_fkey");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.Userid)
+                    .HasConstraintName("orders_userid_fkey");
             });
 
             modelBuilder.Entity<PgStatStatements>(entity =>
@@ -239,9 +250,35 @@ namespace GGsDB.Entities
                     .HasColumnType("oid");
             });
 
-            modelBuilder.Entity<Products>(entity =>
+            modelBuilder.Entity<Users>(entity =>
             {
-                entity.ToTable("products");
+                entity.ToTable("users");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Email)
+                    .HasColumnName("email")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Locationid).HasColumnName("locationid");
+
+                entity.Property(e => e.Name)
+                    .HasColumnName("name")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Type)
+                    .HasColumnName("type")
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.Location)
+                    .WithMany(p => p.Users)
+                    .HasForeignKey(d => d.Locationid)
+                    .HasConstraintName("users_locationid_fkey");
+            });
+
+            modelBuilder.Entity<Videogames>(entity =>
+            {
+                entity.ToTable("videogames");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -253,54 +290,13 @@ namespace GGsDB.Entities
                     .HasColumnName("esrb")
                     .HasMaxLength(3);
 
-                entity.Property(e => e.Genre)
-                    .HasColumnName("genre")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Inventoryid).HasColumnName("inventoryid");
-
-                entity.Property(e => e.Isdigitaledition).HasColumnName("isdigitaledition");
-
                 entity.Property(e => e.Name)
-                    .IsRequired()
                     .HasColumnName("name")
-                    .HasMaxLength(64);
-
-                entity.Property(e => e.Orderid).HasColumnName("orderid");
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.Platform)
                     .HasColumnName("platform")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Prodtype).HasColumnName("prodtype");
-
-                entity.Property(e => e.Storage).HasColumnName("storage");
-
-                entity.HasOne(d => d.Inventory)
-                    .WithMany(p => p.Products)
-                    .HasForeignKey(d => d.Inventoryid)
-                    .HasConstraintName("products_inventoryid_fkey");
-
-                entity.HasOne(d => d.Order)
-                    .WithMany(p => p.Products)
-                    .HasForeignKey(d => d.Orderid)
-                    .HasConstraintName("products_orderid_fkey");
-
-                entity.HasOne(d => d.ProdtypeNavigation)
-                    .WithMany(p => p.Products)
-                    .HasForeignKey(d => d.Prodtype)
-                    .HasConstraintName("products_prodtype_fkey");
-            });
-
-            modelBuilder.Entity<Producttype>(entity =>
-            {
-                entity.ToTable("producttype");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Prodtype)
-                    .HasColumnName("prodtype")
-                    .HasMaxLength(15);
+                    .HasMaxLength(6);
             });
 
             OnModelCreatingPartial(modelBuilder);

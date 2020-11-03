@@ -1,16 +1,20 @@
+using System.Collections.Generic;
+using System.ComponentModel;
+using System;
+
 namespace GGsDB.Models
 {
-    public class VideoGame : Product
+    public class VideoGame
     {
-        public string Genre{get; set;}
-        public string Platform{get; set;}
-        // public string Rating{get; set;}
-        public string ESRB{get; set;}
-        public VideoGame()
+        public int id {get; set;}
+        public string name {get; set;}
+        public decimal cost {get; set;}
+        public string platform {get; set;}
+
+        public string esrb {get; set;}
+        public void PrintInfo()
         {
-            Genre = "";
-            Platform = "";
-            ESRB = "";
+            Console.WriteLine($"{id}\t{name}\t{cost}\t{platform}\t{esrb}");
         }
     }
 }

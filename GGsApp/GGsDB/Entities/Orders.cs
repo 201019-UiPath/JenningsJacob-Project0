@@ -7,13 +7,17 @@ namespace GGsDB.Entities
     {
         public Orders()
         {
-            Products = new HashSet<Products>();
+            Lineitems = new HashSet<Lineitems>();
         }
 
         public int Id { get; set; }
-        public int? Customerid { get; set; }
+        public int Userid { get; set; }
+        public int Locationid { get; set; }
+        public DateTime Orderdate { get; set; }
+        public decimal Totalcost { get; set; }
 
-        public virtual Customers Customer { get; set; }
-        public virtual ICollection<Products> Products { get; set; }
+        public virtual Locations Location { get; set; }
+        public virtual Users User { get; set; }
+        public virtual ICollection<Lineitems> Lineitems { get; set; }
     }
 }

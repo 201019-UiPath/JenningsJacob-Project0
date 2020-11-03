@@ -6,9 +6,9 @@ namespace GGsDB.Mappers
 {
     public interface IVideoGameMapper
     {
-        VideoGame ParseVideoGame(Products product);
-        Products ParseVideoGame(VideoGame product);
-        List<VideoGame> ParseVideoGame(ICollection<Products> products);
-        ICollection<Products> ParseVideoGame(List<VideoGame> products);
+        VideoGame ParseVideoGame(Videogames videogame);
+        Videogames ParseVideoGame(VideoGame videogame);
+        List<VideoGame> ParseVideoGame(ICollection<Videogames> videogames);
+        ICollection<Videogames> ParseVideoGame(List<VideoGame> videogames);
     }
 }

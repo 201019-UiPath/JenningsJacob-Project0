@@ -1,7 +1,7 @@
 namespace GGsDB.Mappers
 {
-    public interface IMapper: IInventoryMapper, ICustomerMapper, ILocationMapper, IOrderMapper, IVideoGameMapper, IGameConsoleMapper, IProductMapper
+    public interface IMapper : ICartItemMapper, ICartMapper, IInventoryItemMapper, ILineItemMapper, ILocationMapper, IOrderMapper, IUserMapper, IVideoGameMapper
     {
-         
+        
     }
 }
