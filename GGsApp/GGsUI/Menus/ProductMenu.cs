@@ -20,7 +20,7 @@ namespace GGsUI.Menus
         private IVideoGameRepo videoGameRepo;
         private VideoGameService videoGameService;
         private ProductDetailsMenu productDetailsMenu;
-        public ProductMenu(User user, GGsContext context, DBMapper mapper)
+        public ProductMenu(ref User user, ref GGsContext context, DBMapper mapper)
         {
             this.user = user;
             this.context = context;
@@ -47,7 +47,7 @@ namespace GGsUI.Menus
                 if (userInput == 0)
                     break;
                 selectedGame = videoGameService.GetVideoGame(userInput);
-                productDetailsMenu = new ProductDetailsMenu(user, selectedGame, context, mapper);
+                productDetailsMenu = new ProductDetailsMenu(ref user, selectedGame, ref context, mapper);
                 productDetailsMenu.Start();
             } while (userInput != 0);
         }

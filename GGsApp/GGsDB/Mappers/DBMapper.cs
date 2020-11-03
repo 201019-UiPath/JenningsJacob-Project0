@@ -121,8 +121,8 @@ namespace GGsDB.Mappers
                 Videogameid = item.videoGameId,
                 Locationid = item.locationId,
                 Quantity = item.quantity,
-                Videogame = ParseVideoGame(item.videoGame),
-                Location = ParseLocation(item.location)
+                // Videogame = ParseVideoGame(item.videoGame),
+                // Location = ParseLocation(item.location)
             };
         }
 
@@ -140,8 +140,8 @@ namespace GGsDB.Mappers
 
         public ICollection<Inventoryitems> ParseInventoryItem(List<InventoryItem> items)
         {
-            if (items.Equals(null))
-                return new List<Inventoryitems>();
+            // if (items.Equals(null))
+            //     return new List<Inventoryitems>();
             ICollection<Inventoryitems> allItems = new List<Inventoryitems>();
             foreach (var item in items)
             {
@@ -152,16 +152,16 @@ namespace GGsDB.Mappers
 
         public LineItem ParseLineItem(Lineitems item)
         {
-            if (item.Equals(null))
-                return new LineItem();
+            // if (item.Equals(null))
+            //     return new LineItem();
             return new LineItem()
             {
                 id = item.Id,
                 orderId = item.Orderid,
                 videoGameId = item.Videogameid,
                 quantity = item.Quantity,
-                order = ParseOrder(item.Order),
-                videoGame = ParseVideoGame(item.Videogame),
+                // order = ParseOrder(item.Order),
+                // videoGame = ParseVideoGame(item.Videogame),
                 price = item.Price
             };
         }
@@ -176,8 +176,8 @@ namespace GGsDB.Mappers
                 Orderid = item.orderId,
                 Videogameid = item.videoGameId,
                 Quantity = item.quantity,
-                Order = ParseOrder(item.order),
-                Videogame = ParseVideoGame(item.videoGame),
+                // Order = ParseOrder(item.order),
+                // Videogame = ParseVideoGame(item.videoGame),
                 Price = item.price
             };
         }
@@ -238,8 +238,8 @@ namespace GGsDB.Mappers
 
         public List<Location> ParseLocation(ICollection<Locations> locations)
         {
-            if (locations.Equals(null))
-                return new List<Location>();
+            // if (locations.Equals(null))
+            //     return new List<Location>();
             List<Location> allLocations = new List<Location>();
             foreach(var l in locations)
             {
@@ -250,8 +250,8 @@ namespace GGsDB.Mappers
 
         public ICollection<Locations> ParseLocation(List<Location> locations)
         {
-            if (locations.Equals(null))
-                return new List<Locations>();
+            // if (locations.Equals(null))
+            //     return new List<Locations>();
             ICollection<Locations> allLocations = new List<Locations>();
             foreach(var l in locations)
             {
@@ -262,8 +262,8 @@ namespace GGsDB.Mappers
 
         public Order ParseOrder(Orders order)
         {
-            if (order.Equals(null))
-                return new Order();
+            // if (order.Equals(null))
+            //     return new Order();
             return new Order()
             {
                 id = order.Id,
@@ -271,16 +271,16 @@ namespace GGsDB.Mappers
                 locationId = order.Locationid,
                 orderDate = order.Orderdate,
                 totalCost = order.Totalcost,
-                user = ParseUser(order.User),
-                location = ParseLocation(order.Location),
-                lineItems = ParseLineItem(order.Lineitems)
+                // user = ParseUser(order.User),
+                // location = ParseLocation(order.Location),
+                // lineItems = ParseLineItem(order.Lineitems)
             };
         }
 
         public Orders ParseOrder(Order order)
         {
-            if (order.Equals(null))
-                return new Orders();
+            // if (order.Equals(null))
+            //     return new Orders();
             return new Orders()
             {
                 Id = order.id,
@@ -288,16 +288,14 @@ namespace GGsDB.Mappers
                 Locationid = order.locationId,
                 Orderdate = order.orderDate,
                 Totalcost = order.totalCost,
-                User = ParseUser(order.user),
-                Location = ParseLocation(order.location),
-                Lineitems = ParseLineItem(order.lineItems)
+                // User = ParseUser(order.user),
+                // Location = ParseLocation(order.location),
+                // Lineitems = ParseLineItem(order.lineItems)
             };
         }
 
         public List<Order> ParseOrder(ICollection<Orders> orders)
         {
-            if (orders.Equals(null))
-                return new List<Order>();
             List<Order> allOrders = new List<Order>();
             foreach (var o in orders)
             {
@@ -308,8 +306,6 @@ namespace GGsDB.Mappers
 
         public ICollection<Orders> ParseOrder(List<Order> orders)
         {
-            if (orders.Equals(null))
-                return new List<Orders>();
             ICollection<Orders> allOrders = new List<Orders>();
             foreach (var o in orders)
             {
@@ -320,43 +316,24 @@ namespace GGsDB.Mappers
 
         public User ParseUser(Users user)
         {
-            // if (user.Equals(null))
-            //     return new User();
-            // if (user.Type.Equals("Customer"))
-            //     return new User()
-            //     {
-            //         id = user.Id,
-            //         name = user.Name,
-            //         email = user.Email,
-            //         locationId = user.Locationid,
-            //         type = User.userType.Customer,
-            //         cart = ParseCart(user.Carts),
-            //         location = ParseLocation(user.Location),
-            //         orders = ParseOrder(user.Orders)
-            //     };
-            // else
-            //     return new User()
-            //     {
-            //         id = user.Id,
-            //         name = user.Name,
-            //         email = user.Email,
-            //         locationId = user.Locationid,
-            //         type = User.userType.Manager,
-            //         cart = ParseCart(user.Carts),
-            //         location = ParseLocation(user.Location),
-            //         orders = ParseOrder(user.Orders)
-            //     };
-            return new User()
-            {
-                id = user.Id,
-                name = user.Name,
-                email = user.Email,
-                locationId = user.Locationid,
-                type = User.userType.Customer,
-                // cart = ParseCart(user.Carts),
-                // location = ParseLocation(user.Location),
-                // orders = ParseOrder(user.Orders)
-            };
+            if (user.Type.Equals("Customer"))
+                return new User()
+                {
+                    id = user.Id,
+                    name = user.Name,
+                    email = user.Email,
+                    locationId = user.Locationid,
+                    type = User.userType.Customer
+                };
+            else
+                return new User()
+                {
+                    id = user.Id,
+                    name = user.Name,
+                    email = user.Email,
+                    locationId = user.Locationid,
+                    type = User.userType.Manager
+                };
         }
 
         public Users ParseUser(User user)
@@ -378,8 +355,6 @@ namespace GGsDB.Mappers
 
         public List<User> ParseUser(ICollection<Users> users)
         {
-            if (users.Equals(null))
-                return new List<User>();
             List<User> allUsers = new List<User>();
             foreach (var u in users)
             {

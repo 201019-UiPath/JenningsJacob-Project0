@@ -23,7 +23,7 @@ namespace GGsUI.Menus
         private LineItemService lineItemService;
         private IVideoGameRepo videoGameRepo;
         private VideoGameService videoGameService;
-        public OrderHistoryMenu(User user, GGsContext context)
+        public OrderHistoryMenu(ref User user, ref GGsContext context)
         {   
             this.user = user;
             this.context = context;

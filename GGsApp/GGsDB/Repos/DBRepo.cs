@@ -269,8 +269,11 @@ namespace GGsDB.Repos
 
         public void UpdateCart(Cart cart)
         {
-            context.Carts.Update(mapper.ParseCart(cart));
-            context.SaveChanges();
+            using (GGsContext context1 = new GGsContext())
+            {
+                context1.Update<Carts>(mapper.ParseCart(cart));
+                context1.SaveChanges();
+            }
         }
 
         public void UpdateCartItem(CartItem item)
@@ -305,14 +308,22 @@ namespace GGsDB.Repos
 
         public void UpdateUser(User user)
         {
-            context.Users.Update(mapper.ParseUser(user));
-            context.SaveChanges();
+            using (GGsContext context1 = new GGsContext())
+            {
+                context1.Update<Users>(mapper.ParseUser(user));
+                context1.SaveChanges();
+            }
+            // context.Users.Update(mapper.ParseUser(user));
+            
         }
 
         public void UpdateVideoGame(VideoGame videoGame)
         {
-            context.Videogames.Update(mapper.ParseVideoGame(videoGame));
-            context.SaveChanges();
+            using (GGsContext context1 = new GGsContext())
+            {
+                context1.Update<Videogames>(mapper.ParseVideoGame(videoGame));
+                context1.SaveChanges();
+            }
         }
     }
 }

@@ -20,7 +20,7 @@ namespace GGsUI.Menus
         private InventoryItemService inventoryService;
         private IVideoGameRepo videoGameRepo;
         private VideoGameService videoGameService;
-        public EditInventoryMenu(User user, GGsContext context, ILocationRepo locationRepo,IInventoryItemRepo inventoryItemRepo,IVideoGameRepo videoGameRepo)
+        public EditInventoryMenu(ref User user, ref GGsContext context, ILocationRepo locationRepo,IInventoryItemRepo inventoryItemRepo,IVideoGameRepo videoGameRepo)
         {
             this.user = user;
             this.context = context;

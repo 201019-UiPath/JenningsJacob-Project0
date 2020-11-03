@@ -19,7 +19,7 @@ namespace GGsUI.Menus
         private UserService userService;
         private LocationService locationService;
         private EditInventoryMenu menu;
-        public ManagerMenu(User user, GGsContext context, IUserRepo userRepo, ILocationRepo locRepo)
+        public ManagerMenu(ref User user, ref GGsContext context, IUserRepo userRepo, ILocationRepo locRepo)
         {
             this.user = user;
             this.context = context;
@@ -31,7 +31,7 @@ namespace GGsUI.Menus
             this.userService = new UserService(userRepo);
             this.locationService = new LocationService(locRepo);
 
-            this.menu = new EditInventoryMenu(user, context, new DBRepo(context, mapper), new DBRepo(context, mapper), new DBRepo(context, mapper));
+            this.menu = new EditInventoryMenu(ref user, ref context, new DBRepo(context, mapper), new DBRepo(context, mapper), new DBRepo(context, mapper));
         }
         public void Start()
         {

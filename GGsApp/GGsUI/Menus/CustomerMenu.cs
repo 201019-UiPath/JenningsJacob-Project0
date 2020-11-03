@@ -15,15 +15,15 @@ namespace GGsUI.Menus
         private OrderHistoryMenu orderHistoryMenu;
         private ChangeLocationMenu changeLocationMenu;
         private CartMenu cartMenu;
-        public CustomerMenu(User user, GGsContext context, DBMapper mapper)
+        public CustomerMenu(ref User user, GGsContext context, DBMapper mapper)
         {
             this.context = context;
             this.user = user;
 
-            this.orderHistoryMenu = new OrderHistoryMenu(user, context);
-            this.changeLocationMenu = new ChangeLocationMenu(user, context, mapper);
-            this.productsMenu = new ProductMenu(user, context, mapper);
-            this.cartMenu = new CartMenu(user, context, mapper);
+            this.orderHistoryMenu = new OrderHistoryMenu(ref user, ref context);
+            this.changeLocationMenu = new ChangeLocationMenu(ref user, ref context, mapper);
+            this.productsMenu = new ProductMenu(ref user, ref context, mapper);
+            this.cartMenu = new CartMenu(ref user, ref context, mapper);
         }
         public void Start()
         {

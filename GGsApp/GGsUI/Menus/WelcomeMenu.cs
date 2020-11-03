@@ -20,7 +20,7 @@ namespace GGsUI.Menus
         private ICartRepo cartRepo;
         private ILocationRepo locationRepo;
         private CustomerMenu customerMenu;
-        public WelcomeMenu(GGsContext context, DBMapper mapper, IUserRepo userRepo, ICartRepo cartRepo, ILocationRepo locationRepo)
+        public WelcomeMenu(ref GGsContext context, DBMapper mapper, IUserRepo userRepo, ICartRepo cartRepo, ILocationRepo locationRepo)
         {
             this.context = context;
             this.mapper = mapper;
@@ -48,14 +48,14 @@ namespace GGsUI.Menus
                 {
                     case "1" :
                         User user = SignIn();
-                        customerMenu = new CustomerMenu(user, context, mapper);
+                        customerMenu = new CustomerMenu(ref user, context, mapper);
                         customerMenu.Start();
                         break;
 
                     case "2":
                         User newUser = SignUp();
                         userService.AddUser(newUser);
-                        customerMenu = new CustomerMenu(newUser, context, mapper);
+                        customerMenu = new CustomerMenu(ref newUser, context, mapper);
                         customerMenu.Start();
                         break;
 

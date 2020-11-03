@@ -31,7 +31,7 @@ namespace GGsUI.Menus
         private ILineItemRepo lineItemRepo;
         private LineItemService lineItemService;
         private EditCartMenu editCartMenu;
-        public CartMenu(User user, GGsContext context, DBMapper mapper)
+        public CartMenu(ref User user, ref GGsContext context, DBMapper mapper)
         {
             this.user = user;
             this.context = context;
@@ -73,7 +73,7 @@ namespace GGsUI.Menus
 
                 Console.WriteLine("Select an option: ");
                 Console.WriteLine("1. Purchase items in cart");
-                Console.WriteLine("2. Edit items in cart");
+                // Console.WriteLine("2. Edit items in cart");
                 Console.WriteLine("0. Exit");
                 userInput = Console.ReadLine();
 

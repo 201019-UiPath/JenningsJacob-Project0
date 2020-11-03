@@ -38,6 +38,7 @@ namespace GGsDB.Entities
 
                 var connectionString = configuration.GetConnectionString("GGsDB");
                 optionsBuilder.UseNpgsql(connectionString);
+                optionsBuilder.EnableSensitiveDataLogging();
             }
         }
 

@@ -20,7 +20,7 @@ namespace GGsUI.Menus
         private CartService cartService;
         private ICartItemRepo cartItemRepo;
         private CartItemService cartItemService;
-        public ProductDetailsMenu(User user, VideoGame videoGame, GGsContext context, DBMapper mapper)
+        public ProductDetailsMenu(ref User user, VideoGame videoGame, ref GGsContext context, DBMapper mapper)
         {
             this.user = user;
             this.videoGame = videoGame;

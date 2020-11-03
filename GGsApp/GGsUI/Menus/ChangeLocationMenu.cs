@@ -21,7 +21,7 @@ namespace GGsUI.Menus
         private UserService userService;
         private ICartRepo cartRepo;
         private CartService cartService;
-        public ChangeLocationMenu(User user, GGsContext context, DBMapper mapper)
+        public ChangeLocationMenu(ref User user, ref GGsContext context, DBMapper mapper)
         {
             this.user = user;
             this.context = context;
