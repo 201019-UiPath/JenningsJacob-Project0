@@ -36,12 +36,12 @@ namespace GGsUI.Menus
         {
             do {
                 Console.WriteLine("\nSelect a product");
-                List<InventoryItem> items = invetoryItemService.GetAllInventoryItemById(user.locationId);
+                List<InventoryItem> items = invetoryItemService.GetAllInventoryItemByLocationId(user.locationId);
                 foreach(var item in items) {
                     VideoGame videoGame = videoGameService.GetVideoGame(item.videoGameId);
                     videoGame.PrintInfo();
                 }
-                Console.WriteLine("0. Go back");
+                Console.WriteLine("\n0. Go back");
 
                 userInput = Int32.Parse(Console.ReadLine());
                 if (userInput == 0)

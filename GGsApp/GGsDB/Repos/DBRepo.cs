@@ -178,12 +178,19 @@ namespace GGsDB.Repos
 
         public Cart GetCartById(int id)
         {
-            return mapper.ParseCart(context.Carts.Single(x => x.Id == id));
+            Cart cart = new Cart();
+            cart = mapper.ParseCart(context.Carts.Single(x => x.Id == id));
+            cart.user = GetUserById(cart.userId);
+            cart.cartItems = GetAllCartItems(cart.id);
+            return cart;
         }
 
         public Cart GetCartByUserId(int id)
         {
-            return mapper.ParseCart(context.Carts.Single(x => x.Userid == id));
+            Cart cart = new Cart();
+            cart = mapper.ParseCart(context.Carts.Single(x => x.Userid == id));
+            cart.cartItems = GetAllCartItems(cart.id);
+            return cart;
         }
 
         public CartItem GetCartItemById(int id)
@@ -240,13 +247,19 @@ namespace GGsDB.Repos
         {
             User user = new User();
             user = mapper.ParseUser(context.Users.Single(x => x.Email == email));
-            // user.cart = GetCartByUserId(user.id);
+            user.cart = GetCartByUserId(user.id);
+            user.location = GetLocationById(user.locationId);
+            // context.Entry<Carts>(mapper.ParseCart(user.cart)).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
             return user;
         }
 
         public User GetUserById(int id)
         {
-            return mapper.ParseUser(context.Users.Single(x => x.Id == id));
+            User user = new User();
+            user = mapper.ParseUser(context.Users.Single(x => x.Id == id));
+            user.cart = GetCartByUserId(user.id);
+            user.location = GetLocationById(user.locationId);
+            return user;
         }
 
         public VideoGame GetVideoGame(int id)

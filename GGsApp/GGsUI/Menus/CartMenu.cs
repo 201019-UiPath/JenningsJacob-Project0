@@ -31,22 +31,20 @@ namespace GGsUI.Menus
         private ILineItemRepo lineItemRepo;
         private LineItemService lineItemService;
         private EditCartMenu editCartMenu;
-        public CartMenu(User user, GGsContext context, IUserRepo userRepo, ILocationRepo locationRepo,
-            IInventoryItemRepo inventoryItemRepo, IVideoGameRepo videoGameRepo, ICartRepo cartRepo, 
-            ICartItemRepo cartItemRepo, IOrderRepo orderRepo, ILineItemRepo lineItemRepo)
+        public CartMenu(User user, GGsContext context, DBMapper mapper)
         {
             this.user = user;
             this.context = context;
             this.mapper = new DBMapper();
 
-            this.userRepo = userRepo;
-            this.locationRepo = locationRepo;
-            this.inventoryItemRepo = inventoryItemRepo;
-            this.videoGameRepo = videoGameRepo;
-            this.cartRepo = cartRepo;
-            this.cartItemRepo = cartItemRepo;
-            this.orderRepo = orderRepo;
-            this.lineItemRepo = lineItemRepo;
+            this.userRepo = new DBRepo(context, mapper);
+            this.locationRepo = new DBRepo(context, mapper);
+            this.inventoryItemRepo = new DBRepo(context, mapper);
+            this.videoGameRepo = new DBRepo(context, mapper);
+            this.cartRepo = new DBRepo(context, mapper);
+            this.cartItemRepo = new DBRepo(context, mapper);
+            this.orderRepo = new DBRepo(context, mapper);
+            this.lineItemRepo = new DBRepo(context, mapper);
 
             this.userService = new UserService(userRepo);
             this.locationService = new LocationService(locationRepo);

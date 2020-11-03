@@ -8,32 +8,22 @@ namespace GGsDB.Mappers
     {
         public Cart ParseCart(Carts cart)
         {
-            if (cart == null)
-                return new Cart();
             return new Cart(){
                 id = cart.Id,
                 userId = cart.Userid,
-                user = ParseUser(cart.User),
-                cartItems = ParseCartItem(cart.Cartitems)
             };
         }
 
         public Carts ParseCart(Cart cart)
         {
-            if (cart.Equals(null))
-                return new Carts();
             return new Carts(){
                 Id = cart.id,
                 Userid = cart.userId,
-                User = ParseUser(cart.user),
-                Cartitems = ParseCartItem(cart.cartItems)
             };
         }
 
         public List<Cart> ParseCart(ICollection<Carts> carts)
         {
-            if (carts == null)
-                return new List<Cart>();
             List<Cart> allCarts = new List<Cart>();
             foreach (var c in carts)
             {
@@ -44,8 +34,8 @@ namespace GGsDB.Mappers
 
         public ICollection<Carts> ParseCart(List<Cart> carts)
         {
-            if (carts.Equals(null))
-                return new List<Carts>();
+            // if (carts.Equals(null))
+            //     return new List<Carts>();
             ICollection<Carts> allCarts = new List<Carts>();
             foreach (var c in carts)
             {
@@ -56,36 +46,36 @@ namespace GGsDB.Mappers
 
         public CartItem ParseCartItem(Cartitems item)
         {
-            if (item.Equals(null))
-                return new CartItem();
+            // if (item.Equals(null))
+            //     return new CartItem();
             return new CartItem(){
                 id = item.Id,
                 cartId = item.Cartid,
                 videoGameId = item.Videogameid,
                 quantity = item.Quantity,
-                cart = ParseCart(item.Cart),
-                videoGame = ParseVideoGame(item.Videogame)
+                // cart = ParseCart(item.Cart),
+                // videoGame = ParseVideoGame(item.Videogame)
             };
         }
 
         public Cartitems ParseCartItem(CartItem item)
         {
-            if (item.Equals(null))
-                return new Cartitems();
+            // if (item.Equals(null))
+            //     return new Cartitems();
             return new Cartitems(){
                 Id = item.id,
                 Cartid = item.cartId,
                 Videogameid = item.videoGameId,
                 Quantity = item.quantity,
-                Cart = ParseCart(item.cart),
-                Videogame = ParseVideoGame(item.videoGame)
+                // Cart = ParseCart(item.cart),
+                // Videogame = ParseVideoGame(item.videoGame)
             };
         }
 
         public List<CartItem> ParseCartItem(ICollection<Cartitems> item)
         {
-            if (item.Equals(null))
-                return new List<CartItem>();
+            // if (item.Equals(null))
+            //     return new List<CartItem>();
             List<CartItem> allItems = new List<CartItem>();
             foreach(var i in item)
             {
@@ -96,8 +86,8 @@ namespace GGsDB.Mappers
 
         public ICollection<Cartitems> ParseCartItem(List<CartItem> item)
         {
-            if (item.Equals(null))
-                return new List<Cartitems>();
+            // if (item.Equals(null))
+            //     return new List<Cartitems>();
             ICollection<Cartitems> allItems = new List<Cartitems>();
             foreach(var i in item)
             {
@@ -108,16 +98,16 @@ namespace GGsDB.Mappers
 
         public InventoryItem ParseInventoryItem(Inventoryitems item)
         {
-            if (item.Equals(null))
-                return new InventoryItem();
+            // if (item.Equals(null))
+            //     return new InventoryItem();
             return new InventoryItem()
             {
                 id = item.Id,
                 videoGameId = item.Videogameid,
                 locationId = item.Locationid,
                 quantity = item.Quantity,
-                videoGame = ParseVideoGame(item.Videogame),
-                location = ParseLocation(item.Location)
+                // videoGame = ParseVideoGame(item.Videogame),
+                // location = ParseLocation(item.Location)
             };
         }
 
@@ -138,8 +128,8 @@ namespace GGsDB.Mappers
 
         public List<InventoryItem> ParseInventoryItem(ICollection<Inventoryitems> items)
         {
-            if (items.Equals(null))
-                return new List<InventoryItem>();
+            // if (items.Equals(null))
+            //     return new List<InventoryItem>();
             List<InventoryItem> allItems = new List<InventoryItem>();
             foreach (var item in items)
             {
@@ -218,8 +208,8 @@ namespace GGsDB.Mappers
 
         public Location ParseLocation(Locations location)
         {
-            if (location == null)
-                return new Location();
+            // if (location == null)
+            //     return new Location();
             return new Location()
             {
                 id = location.Id,
@@ -227,14 +217,14 @@ namespace GGsDB.Mappers
                 city = location.City,
                 state = location.State,
                 zipCode = location.Zipcode,
-                inventory = ParseInventoryItem(location.Inventoryitems)
+                // inventory = ParseInventoryItem(location.Inventoryitems)
             };
         }
 
         public Locations ParseLocation(Location location)
         {
-            if (location.Equals(null))
-                return new Locations();
+            // if (location.Equals(null))
+            //     return new Locations();
             return new Locations()
             {
                 Id = location.id,
@@ -242,7 +232,7 @@ namespace GGsDB.Mappers
                 City = location.city,
                 State = location.state,
                 Zipcode = location.zipCode,
-                Inventoryitems = ParseInventoryItem(location.inventory)
+                // Inventoryitems = ParseInventoryItem(location.inventory)
             };
         }
 
@@ -330,38 +320,49 @@ namespace GGsDB.Mappers
 
         public User ParseUser(Users user)
         {
-            if (user.Equals(null))
-                return new User();
-            if (user.Type.Equals("Customer"))
-                return new User()
-                {
-                    id = user.Id,
-                    name = user.Name,
-                    email = user.Email,
-                    locationId = user.Locationid,
-                    type = User.userType.Customer,
-                    cart = ParseCart(user.Carts),
-                    location = ParseLocation(user.Location),
-                    orders = ParseOrder(user.Orders)
-                };
-            else
-                return new User()
-                {
-                    id = user.Id,
-                    name = user.Name,
-                    email = user.Email,
-                    locationId = user.Locationid,
-                    type = User.userType.Manager,
-                    cart = ParseCart(user.Carts),
-                    location = ParseLocation(user.Location),
-                    orders = ParseOrder(user.Orders)
-                };
+            // if (user.Equals(null))
+            //     return new User();
+            // if (user.Type.Equals("Customer"))
+            //     return new User()
+            //     {
+            //         id = user.Id,
+            //         name = user.Name,
+            //         email = user.Email,
+            //         locationId = user.Locationid,
+            //         type = User.userType.Customer,
+            //         cart = ParseCart(user.Carts),
+            //         location = ParseLocation(user.Location),
+            //         orders = ParseOrder(user.Orders)
+            //     };
+            // else
+            //     return new User()
+            //     {
+            //         id = user.Id,
+            //         name = user.Name,
+            //         email = user.Email,
+            //         locationId = user.Locationid,
+            //         type = User.userType.Manager,
+            //         cart = ParseCart(user.Carts),
+            //         location = ParseLocation(user.Location),
+            //         orders = ParseOrder(user.Orders)
+            //     };
+            return new User()
+            {
+                id = user.Id,
+                name = user.Name,
+                email = user.Email,
+                locationId = user.Locationid,
+                type = User.userType.Customer,
+                // cart = ParseCart(user.Carts),
+                // location = ParseLocation(user.Location),
+                // orders = ParseOrder(user.Orders)
+            };
         }
 
         public Users ParseUser(User user)
         {
-            if (user.Equals(null))
-                return new Users();
+            // if (user.Equals(null))
+            //     return new Users();
             return new Users()
                 {
                     Id = user.id,
@@ -369,9 +370,9 @@ namespace GGsDB.Mappers
                     Email = user.email,
                     Locationid = user.locationId,
                     Type = user.type.ToString(),
-                    Carts = ParseCart(user.cart),
-                    Location = ParseLocation(user.location),
-                    Orders = ParseOrder(user.orders)
+                    // Carts = ParseCart(user.cart),
+                    // Location = ParseLocation(user.location),
+                    // Orders = ParseOrder(user.orders)
                 };
         }
 
@@ -389,8 +390,6 @@ namespace GGsDB.Mappers
 
         public ICollection<Users> ParseUser(List<User> users)
         {
-            if (users.Equals(null))
-                return new List<Users>();
             ICollection<Users> allUsers = new List<Users>();
             foreach (var u in users)
             {
@@ -401,8 +400,6 @@ namespace GGsDB.Mappers
 
         public VideoGame ParseVideoGame(Videogames videogame)
         {
-            if (videogame.Equals(null))
-                return new VideoGame();
             return new VideoGame()
             {
                 id = videogame.Id,
@@ -415,8 +412,6 @@ namespace GGsDB.Mappers
 
         public Videogames ParseVideoGame(VideoGame videogame)
         {
-            if (videogame.Equals(null))
-                return new Videogames();
             return new Videogames()
             {
                 Id = videogame.id,
@@ -429,8 +424,6 @@ namespace GGsDB.Mappers
 
         public List<VideoGame> ParseVideoGame(ICollection<Videogames> videogames)
         {
-            if (videogames.Equals(null))
-                return new List<VideoGame>();
             List<VideoGame> allVideoGames = new List<VideoGame>();
             foreach (var vg in videogames)
             {
@@ -441,24 +434,12 @@ namespace GGsDB.Mappers
 
         public ICollection<Videogames> ParseVideoGame(List<VideoGame> videogames)
         {
-            if (videogames.Equals(null))
-                return new List<Videogames>();
             ICollection<Videogames> allVideoGames = new List<Videogames>();
             foreach (var vg in videogames)
             {
                 allVideoGames.Add(ParseVideoGame(vg));
             }
             return allVideoGames;
-        }
-
-        Cart ICartMapper.ParseCart(Carts cart)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        List<Cart> ICartMapper.ParseCart(ICollection<Carts> carts)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

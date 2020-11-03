@@ -14,7 +14,7 @@ namespace GGsDB.Models
         public string esrb {get; set;}
         public void PrintInfo()
         {
-            Console.WriteLine($"{id}\t{name}\t{cost}\t{platform}\t{esrb}");
+            Console.WriteLine($"{id}. {name}\t{cost}\t{platform}\t{esrb}");
         }
     }
 }

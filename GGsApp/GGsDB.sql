@@ -1,123 +1,116 @@
--- drop table products;
--- drop table orders;
--- drop table customers;
--- drop table locations;
--- drop table managers;
--- drop table inventories;
--- drop table producttype;
--- creating the type of product --
-create table producttype
-(
+-- drop table cart cascade;
+-- drop table cartitem cascade;
+-- drop table inventoryitem cascade;
+-- drop table lineitem cascade;
+-- drop table location cascade;
+-- drop table orders cascade;
+-- drop table users cascade;
+-- drop table videogame cascade;
+
+create table VideoGames (
     id serial primary key,
-    prodtype varchar(15)
+    name varchar(50),
+    cost NUMERIC(6, 2),
+    platform varchar(6),
+    esrb varchar(3)
 );
 
--- creating inventories table --
-create table inventories
-(
+create table Locations (
     id serial primary key,
-    city varchar(50) not null,
-    state varchar(2) not null
+    street varchar(50),
+    city varchar(50),
+    state varchar(50),
+    zipcode varchar(50)
 );
 
--- creating managers table --
-create table managers
-(
+create table Users (
     id serial primary key,
-    firstname varchar(50) not null,
-    lastname varchar(50) not null,
-    email varchar(100) unique not null,
-    age int not null
+    name varchar(50),
+    email varchar(50),
+    locationId int references Locations,
+    type varchar(50)
 );
 
--- creating locations table --
-create table locations
-(
+create table Carts(
     id serial primary key,
-    street varchar(50) not null,
-    city varchar(50) not null,
-    state varchar(2) not null,
-    zipcode int not null
+    userId int references users
 );
 
--- creating customers table --
-create table customers
-(
+create table CartItems (
     id serial primary key,
-    firstname varchar(50) not null,
-    lastname varchar(50) not null,
-    email varchar(100) unique not null,
-    age integer not null,
-    locationId int references locations (id)
+    cartId int references Carts,
+    videoGameId int references VideoGames,
+    quantity int not null
 );
 
--- creating orders table -- 
-create table orders
-(
+create table InventoryItems (
     id serial primary key,
-    customerId int references customers (id)
+    videoGameId int references VideoGames,
+    locationId int references Locations,
+    quantity INT not null
 );
 
--- creating the products table --
-create table products
-(
+create table Orders (
     id serial primary key,
-    cost NUMERIC(6, 2) not NULL,
-    name varchar(64) not null,
-    prodtype int REFERENCES producttype (id),
-    inventoryId int references inventories (id),
-    orderId int references orders (id)
+    userId int REFERENCES Users,
+    locationId int references Locations,
+    orderDate TIMESTAMP,
+    totalCost NUMERIC(8, 2) not null
 );
 
--- inserting seed data --
-insert into producttype (prodtype) VALUES
-('Video game'),
-('Game console');
+create table LineItems (
+    id serial primary key,
+    orderId int references Orders,
+    videoGameId int references VideoGames,
+    quantity int not null
+);
 
-insert into inventories (city, state) values 
-('Oakland', 'CA'),
-('San Francisco', 'CA'),
-('Seattle', 'WA'),
-('Miami', 'FL'),
-('New York City', 'NY');
+insert into VideoGames (name, cost, platform, esrb) VALUES
+('Cyberpunk 2077', 59.99, 'PC', 'M'),
+('Call of Duty', 59.99, 'PS5', 'M'),
+('Among Us', 4.99, 'PC', 'E'),
+('Assassins Creed', 59.99, 'XBOX', 'M'),
+('NBA 2K21', 59.99, 'PS5', 'E');
 
-insert into managers (firstname, lastname, email, age) VALUES
-('Jacob', 'Jennings', 'jacobjennings@gmail.com', 23);
+insert into Locations (street, city, state, zipcode) VALUES
+('721 Market St.', 'San Francisco', 'CA', '94108'),
+('6841 Broadway Blvd.', 'Oakland', 'CA', '94512'),
+('87467 Random Ave.', 'Seattle', 'WA', '89741'),
+('7645 Pine Rd', 'Miami', 'FL', '65476'),
+('84643 5th Ave.', 'New York', 'NY', '24654');
 
-insert into locations (street, city, state, zipcode) values 
-('123 penny ln', 'Hayward', 'CA', 94541),
-('221 cherry st', 'New York','NY', 65480),
-('87865 Washington blvd', 'Philadelphia','PA', 32546),
-('6546 Overtree ave', 'Alberquerque','NM', 98765);
+insert into Users (name, email, locationId, type) VALUES
+('Maxine', 'mwong@gmail.com', 1, 'Customer'),
+('Josh', 'jvalli@gmail.com', 2, 'Customer'),
+('Justin', 'jpon@gmail.com', 5, 'Customer'),
+('Ellie', 'emac@gmail.com', 3, 'Customer'),
+('Jacob', 'jjennings@gmail.com', 4, 'Manager');
 
-insert into customers (firstname, lastname, email, age, locationId) values 
-('Mark', 'Twain', 'mtwain@gmail.com', 100, 2),
-('Josh', 'Vallinator', 'jvallinator@gmail.com', 35, 3),
-('Maxine', 'Wong', 'mwong@gmail.com', 25, 1);
-
-insert into orders (customerId) values 
+insert into Carts (userId) VALUES
 (1),
-(1),
-(2),
 (2),
 (3),
-(3);
+(4),
+(5);
 
-insert into products (cost, name, prodtype, inventoryId, orderId) values
-(59.99, 'Cyberpunk 2077', 1, 1, 1),
-(400.00, 'PS5', 2, 1, 1),
-(59.99, 'Call of Duty', 1, 1, 2),
-(400.00, 'PC', 2, 2, 3);
-
-alter table products
-drop column storage;
-alter table products
-add storage int;
-
-update products
-set storage = 1, isDigitalEdition = true
-where id = 4;
-
-select * from producttype;
-alter table products
-add isDigitalEdition boolean 
+insert into inventoryitems (videogameid, locationid, quantity) VALUES
+(1, 1, 5),
+(1, 2, 4),
+(1, 3, 10),
+(1, 4, 7),
+(1, 5, 2),
+(2, 1, 2),
+(2, 2, 10),
+(2, 3, 10),
+(2, 4, 54),
+(2, 5, 2),
+(3, 1, 45),
+(3, 2, 6),
+(3, 3, 10),
+(3, 4, 43),
+(3, 5, 9),
+(4, 1, 5),
+(4, 2, 4),
+(4, 3, 10),
+(5, 4, 7),
+(5, 5, 2);

@@ -21,11 +21,11 @@ namespace GGsUI.Menus
         private UserService userService;
         private ICartRepo cartRepo;
         private CartService cartService;
-        public ChangeLocationMenu(User user, GGsContext context)
+        public ChangeLocationMenu(User user, GGsContext context, DBMapper mapper)
         {
             this.user = user;
             this.context = context;
-            this.mapper = new DBMapper();
+            this.mapper = mapper;
             
             this.userRepo = new DBRepo(context, mapper);
             this.locationRepo = new DBRepo(context, mapper);

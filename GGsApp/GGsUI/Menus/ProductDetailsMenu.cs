@@ -41,6 +41,7 @@ namespace GGsUI.Menus
                 InventoryItem item = inventoryItemService.GetInventoryItem(user.locationId, videoGame.id);
                 int quantity = item.quantity;
 
+                Console.WriteLine("\nSelected Product: ");
                 videoGame.PrintInfo();
                 Console.WriteLine("1. Add to cart");
                 Console.WriteLine("0. Go back");

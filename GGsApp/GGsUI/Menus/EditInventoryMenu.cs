@@ -10,7 +10,6 @@ namespace GGsUI.Menus
     public class EditInventoryMenu : IMenu
     {
         private string userInput;
-        private VideoGame videoGame;
         private int locationId;
         private InventoryItem selectedItem;
         private User user;

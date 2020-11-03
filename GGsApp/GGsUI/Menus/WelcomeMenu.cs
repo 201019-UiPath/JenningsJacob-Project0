@@ -48,14 +48,14 @@ namespace GGsUI.Menus
                 {
                     case "1" :
                         User user = SignIn();
-                        customerMenu = new CustomerMenu(context, user);
+                        customerMenu = new CustomerMenu(user, context, mapper);
                         customerMenu.Start();
                         break;
 
                     case "2":
                         User newUser = SignUp();
                         userService.AddUser(newUser);
-                        customerMenu = new CustomerMenu(context, newUser);
+                        customerMenu = new CustomerMenu(newUser, context, mapper);
                         customerMenu.Start();
                         break;
 
