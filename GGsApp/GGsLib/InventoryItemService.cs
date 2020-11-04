@@ -39,9 +39,13 @@ namespace GGsLib
         {
             return repo.GetInventoryItem(locId, vgId);
         }
-        public void UpdateInventoryItem(InventoryItem item)
+        public void DiminishInventoryItem(InventoryItem item, int quantity)
         {
-            repo.UpdateInventoryItem(item);
+            repo.DiminishInventoryItem(item, quantity);
+        }
+        public void ReplenishInventoryItem(InventoryItem item, int quantity)
+        {
+            repo.ReplenishInventoryItem(item, quantity);
         }
     }
 }

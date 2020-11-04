@@ -20,10 +20,6 @@ namespace GGsUI.Menus
         private LocationService locationService;
         private IInventoryItemRepo inventoryItemRepo;
         private InventoryItemService inventoryItemService;
-        private ICartRepo cartRepo;
-        private CartService cartService;
-        private ICartItemRepo cartItemRepo;
-        private CartItemService cartItemService;
         private IVideoGameRepo videoGameRepo;
         private VideoGameService videoGameService;
         private IOrderRepo orderRepo;
@@ -42,8 +38,6 @@ namespace GGsUI.Menus
             this.locationRepo = new DBRepo(context, mapper);
             this.inventoryItemRepo = new DBRepo(context, mapper);
             this.videoGameRepo = new DBRepo(context, mapper);
-            this.cartRepo = new DBRepo(context, mapper);
-            this.cartItemRepo = new DBRepo(context, mapper);
             this.orderRepo = new DBRepo(context, mapper);
             this.lineItemRepo = new DBRepo(context, mapper);
 
@@ -51,8 +45,6 @@ namespace GGsUI.Menus
             this.locationService = new LocationService(locationRepo);
             this.inventoryItemService = new InventoryItemService(inventoryItemRepo);
             this.videoGameService = new VideoGameService(videoGameRepo);
-            this.cartService = new CartService(cartRepo);
-            this.cartItemService = new CartItemService(cartItemRepo);
             this.orderService = new OrderService(orderRepo);
             this.lineItemService = new LineItemService(lineItemRepo);
 
@@ -62,13 +54,10 @@ namespace GGsUI.Menus
         public void Start()
         {
             do {
-                Cart cart = cartService.GetCartByUserId(user.id);
-                List<CartItem> items = cartItemService.GetAllCartItems(cart.id);
-
                 Console.WriteLine("Current items in cart:");
-                foreach (var item in items)
+                foreach (var item in user.cart.cartItems)
                 {
-                    VideoGame vg = videoGameService.GetVideoGame(item.videoGameId);
+                    VideoGame vg = item.videoGame;
                     Console.Write($"{item.quantity}x\t");
                     vg.PrintInfo();
                 }
@@ -81,9 +70,9 @@ namespace GGsUI.Menus
 
                 switch(userInput) {
                     case "1":
-                        Order newOrder = orderService.MakePurchase(user, cartService, cartItemService, videoGameService, lineItemService, inventoryItemService);
+                        Order newOrder = orderService.MakePurchase(user, videoGameService, lineItemService, inventoryItemService);
                         Console.WriteLine("\nOrder Receipt:");
-                        orderService.GenerateReceipt(newOrder, locationService, lineItemService, videoGameService);
+                        GenerateReceipt(newOrder);
                         Console.WriteLine("\nYour has completed, thank you again");
                         customerMenu = new CustomerMenu(ref user, ref context, mapper);
                         customerMenu.Start();
@@ -98,6 +87,20 @@ namespace GGsUI.Menus
                         break;  
                 }
             } while(!userInput.Equals("0"));
+        }
+        public void GenerateReceipt(Order newOrder)
+        {
+            Location location = locationService.GetLocationById(newOrder.locationId);
+            Console.WriteLine($"Date: {newOrder.orderDate}\tTotal: ${newOrder.totalCost}\tLocation: {location.city}, {location.state}");
+
+            Console.WriteLine("Line items:");
+            List<LineItem> newItems = lineItemService.GetAllLineItemsById(newOrder.id);
+            foreach(var item in newItems)
+            {
+                VideoGame videoGame = videoGameService.GetVideoGame(item.videoGameId);
+                Console.Write($"{item.quantity}x\t");
+                videoGame.PrintInfo();
+            }
         }
     }
 }

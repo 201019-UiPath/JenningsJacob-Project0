@@ -13,11 +13,9 @@ namespace GGsDB.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
-        public int Locationid { get; set; }
         public string Type { get; set; }
-
+        public int Locationid { get; set; }
         public virtual Locations Location { get; set; }
-        public virtual Carts Carts { get; set; }
         public virtual ICollection<Orders> Orders { get; set; }
     }
 }

@@ -60,9 +60,9 @@ namespace GGsLib
         {
             return repo.GetAllOrdersPriceDesc(userId);
         }
-        public void UpdateOrder(Order order)
+        public void UpdateOrderCost(Order order, decimal totalCost)
         {
-            repo.UpdateOrder(order);
+            repo.UpdateOrderCost(order, totalCost);
         }
         /// <summary>
         /// Prepares and completes order while updating appropriate tables in the database
@@ -73,25 +73,24 @@ namespace GGsLib
         /// <param name="videoGameService"></param>
         /// <param name="lineItemService"></param>
         /// <param name="inventoryItemService"></param>
-        public Order MakePurchase(User user, CartService cartService, CartItemService cartItemService, 
-        VideoGameService videoGameService, LineItemService lineItemService, InventoryItemService inventoryItemService)
+        public Order MakePurchase(User user, VideoGameService videoGameService, LineItemService lineItemService, InventoryItemService inventoryItemService)
         {
-            Cart cart = cartService.GetCartByUserId(user.id);
-            List<CartItem> items = cartItemService.GetAllCartItems(cart.id);
-
+            // Create new order object to be added to DB
             Order order = new Order();
             decimal totalCost = 0;
-
             order.userId = user.id;
             order.locationId = user.locationId;
-            DateTime orderDate = order.orderDate = DateTime.Now;
+            order.orderDate = DateTime.Now;
             AddOrder(order);
+            
+            // Get that order back with generated id
+            Order newOrder = GetOrderByDate(order.orderDate);
+            order.id = newOrder.id;
 
-            Order newOrder = GetOrderByDate(orderDate);
-
-            foreach (var item in items)
+            foreach (var item in user.cart.cartItems)
             {
-                VideoGame videoGame = videoGameService.GetVideoGame(item.videoGameId);
+                // Get video game from user cart and create new line items to be added to DB
+                VideoGame videoGame = item.videoGame;
                 LineItem lineItem = new LineItem();
                 lineItem.orderId = newOrder.id;
                 lineItem.videoGameId = item.videoGameId;
@@ -101,30 +100,15 @@ namespace GGsLib
                 totalCost += (videoGame.cost * item.quantity);
 
                 lineItemService.AddLineItem(lineItem);
-                cartItemService.DeleteCartItem(item);
 
+                // Remove item from inventory
                 InventoryItem inventoryItem = inventoryItemService.GetInventoryItem(user.locationId, videoGame.id);
-                inventoryItem.quantity -= item.quantity;
-                inventoryItemService.UpdateInventoryItem(inventoryItem);
+                inventoryItemService.DiminishInventoryItem(inventoryItem, item.quantity);
             }
-
-            newOrder.totalCost = totalCost;
-            UpdateOrder(newOrder);
+            // Clear user cart and update order cost
+            user.cart.cartItems.Clear();
+            UpdateOrderCost(order, totalCost);
             return newOrder;
-        }
-        public void GenerateReceipt(Order newOrder, LocationService locationService, LineItemService lineItemService, VideoGameService videoGameService)
-        {
-            Location location = locationService.GetLocationById(newOrder.locationId);
-            Console.WriteLine($"Date: {newOrder.orderDate}\tTotal: ${newOrder.totalCost}\tLocation: {location.city}, {location.state}");
-
-            Console.WriteLine("Line items:");
-            List<LineItem> newItems = lineItemService.GetAllLineItemsById(newOrder.id);
-            foreach(var item in newItems)
-            {
-                VideoGame videoGame = videoGameService.GetVideoGame(item.videoGameId);
-                Console.Write($"{item.quantity}x\t");
-                videoGame.PrintInfo();
-            }
         }
     }
 }

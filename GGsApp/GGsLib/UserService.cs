@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using GGsDB.Repos;
 using GGsDB.Models;
 
@@ -13,6 +14,12 @@ namespace GGsLib
         }
         public void AddUser(User user)
         {
+            List<User> allUsers = repo.GetAllUsers();
+            foreach(var u in allUsers)
+            {
+                if (u.email.Equals(user.email))
+                    throw new Exception("This email already exists.");
+            }
             repo.AddUser(user);
         }
         public void DeleteUser(User user)

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using GGsDB.Models;
 
 namespace GGsDB.Repos
@@ -6,6 +8,7 @@ namespace GGsDB.Repos
     {
         void AddUser(User user);
         void UpdateUser(User user);
+        List<User> GetAllUsers();
         User GetUserById(int id);
         User GetUserByEmail(string email);
         void DeleteUser(User user);

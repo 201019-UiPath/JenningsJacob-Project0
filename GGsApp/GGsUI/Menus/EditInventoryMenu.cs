@@ -102,10 +102,10 @@ namespace GGsUI.Menus
         {
             selectedItem = inventoryService.GetInventoryItem(locationId, id);
             Console.WriteLine("\nHow many more items would you like to add?");
-            int amount = Int32.Parse(Console.ReadLine());
+            int quantity = Int32.Parse(Console.ReadLine());
 
-            selectedItem.quantity += amount;
-            inventoryService.UpdateInventoryItem(selectedItem);
+            // selectedItem.quantity += amount;
+            inventoryService.ReplenishInventoryItem(selectedItem, quantity);
         }
     }
 }

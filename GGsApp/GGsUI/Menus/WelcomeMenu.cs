@@ -14,24 +14,22 @@ namespace GGsUI.Menus
         private GGsContext context;
         private DBMapper mapper;
         private UserService userService;
-        private CartService cartService;
-        private LocationService locationService;
         private IUserRepo userRepo;
-        private ICartRepo cartRepo;
+        private LocationService locationService;
         private ILocationRepo locationRepo;
         private CustomerMenu customerMenu;
         private ManagerMenu managerMenu;
-        public WelcomeMenu(ref GGsContext context, DBMapper mapper, IUserRepo userRepo, ICartRepo cartRepo, ILocationRepo locationRepo)
+        // public WelcomeMenu(ref GGsContext context, DBMapper mapper, IUserRepo userRepo, ICartRepo cartRepo, ILocationRepo locationRepo)
+        public WelcomeMenu(ref GGsContext context, DBMapper mapper, IUserRepo userRepo, ILocationRepo locationRepo)
         {
             this.context = context;
             this.mapper = mapper;
 
             this.userRepo = userRepo;
-            this.cartRepo = cartRepo;
+            // this.cartRepo = cartRepo;
             this.locationRepo = locationRepo;
 
             userService = new UserService(userRepo);
-            cartService = new CartService(cartRepo);
             locationService = new LocationService(locationRepo);
         }
         public void Start()
@@ -57,14 +55,20 @@ namespace GGsUI.Menus
                             managerMenu = new ManagerMenu(ref user, ref context, userRepo, locationRepo);
                             managerMenu.Start();
                         }
-                        
                         break;
 
                     case "2":
                         User newUser = SignUp();
-                        userService.AddUser(newUser);
-                        customerMenu = new CustomerMenu(ref newUser, ref context, mapper);
-                        customerMenu.Start();
+                        try {
+                            userService.AddUser(newUser);
+                            customerMenu = new CustomerMenu(ref newUser, ref context, mapper);
+                            customerMenu.Start();
+                        } catch(Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                            continue;
+                        }
+                        
                         break;
 
                     case "0" :
@@ -96,21 +100,19 @@ namespace GGsUI.Menus
                 if (user.type == User.userType.Customer)
                 {
                     try {
-                        // Delete previous cart
-                        cartService.DeleteCart(cartService.GetCartByUserId(user.id));
+                        // Delete previous 
+                        user.cart = new Cart();
+                        user.cart.cartItems.Clear();
+                        // cartService.DeleteCart(cartService.GetCartByUserId(user.id));
                     } catch (InvalidOperationException){
                         // Handle exception
                     }
                     finally {
                         // Create new card and add to DB
-                        Cart newCart = new Cart();
-                        newCart.userId = user.id;
-                        cartService.AddCart(newCart);
+                        // Cart newCart = new Cart();
+                        // newCart.userId = user.id;
+                        // cartService.AddCart(newCart);
                     }
-                }
-                if (user.type == User.userType.Manager)
-                {
-                    // Start new manager menu
                 }
             } catch (ArgumentException) {
                 // Log error and restart
@@ -172,11 +174,9 @@ namespace GGsUI.Menus
                 }
             } while (showMenu);
 
-            Cart newCart = new Cart();
-            newCart.userId = newUser.id;
-            cartService.AddCart(newCart);
-
-            Console.WriteLine("Account successfully created!");
+            // Cart newCart = new Cart();
+            // newCart.userId = newUser.id;
+            // cartService.AddCart(newCart);
             return newUser;
             
         }

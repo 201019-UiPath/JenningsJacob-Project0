@@ -16,9 +16,6 @@ namespace GGsDB.Entities
             : base(options)
         {
         }
-
-        public virtual DbSet<Cartitems> Cartitems { get; set; }
-        public virtual DbSet<Carts> Carts { get; set; }
         public virtual DbSet<Inventoryitems> Inventoryitems { get; set; }
         public virtual DbSet<Lineitems> Lineitems { get; set; }
         public virtual DbSet<Locations> Locations { get; set; }
@@ -65,38 +62,6 @@ namespace GGsDB.Entities
                 .HasPostgresExtension("unaccent")
                 .HasPostgresExtension("uuid-ossp")
                 .HasPostgresExtension("xml2");
-
-            modelBuilder.Entity<Cartitems>(entity =>
-            {
-                entity.ToTable("cartitems");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Cartid).HasColumnName("cartid");
-
-                entity.Property(e => e.Quantity).HasColumnName("quantity");
-
-                entity.Property(e => e.Videogameid).HasColumnName("videogameid");
-
-                entity.HasOne(d => d.Cart)
-                    .WithMany(p => p.Cartitems)
-                    .HasForeignKey(d => d.Cartid)
-                    .HasConstraintName("cartitems_cartid_fkey");
-
-                entity.HasOne(d => d.Videogame)
-                    .WithMany(p => p.Cartitems)
-                    .HasForeignKey(d => d.Videogameid)
-                    .HasConstraintName("cartitems_videogameid_fkey");
-            });
-
-            modelBuilder.Entity<Carts>(entity =>
-            {
-                entity.ToTable("carts");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Userid).HasColumnName("userid");
-            });
 
             modelBuilder.Entity<Inventoryitems>(entity =>
             {
@@ -299,6 +264,7 @@ namespace GGsDB.Entities
                 entity.Property(e => e.Platform)
                     .HasColumnName("platform")
                     .HasMaxLength(6);
+                
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -75,13 +75,28 @@ namespace GGsUI.Menus
                 }
             } while(!userInput.Equals("0"));
         }
-
+        /// <summary>
+        /// Prints out order information
+        /// </summary>
+        /// <param name="orders">List of orders you want to print</param>
         public void GetOrders(List<Order> orders)
         {
             Console.WriteLine("\nOrder History:\n");
             foreach (var order in orders)
             {
-                orderService.GenerateReceipt(order, locationService, lineItemService, videoGameService);
+                Location location = locationService.GetLocationById(order.locationId);
+                Console.WriteLine($"Date: {order.orderDate}\tTotal: ${order.totalCost}\tLocation: {location.city}, {location.state}");
+
+                Console.WriteLine("Line items:");
+                List<LineItem> newItems = lineItemService.GetAllLineItemsById(order.id);
+                foreach(var item in newItems)
+                {
+                    VideoGame videoGame = videoGameService.GetVideoGame(item.videoGameId);
+                    Console.Write($"{item.quantity}x\t");
+                    videoGame.PrintInfo();
+                }
+                // orderService.GenerateReceipt(order, locationService, lineItemService, videoGameService);
+                Console.WriteLine();
             }
             // Clear orders in case they wish to change how they view it
             orders.Clear();

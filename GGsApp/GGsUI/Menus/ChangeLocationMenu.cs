@@ -19,8 +19,6 @@ namespace GGsUI.Menus
         private LocationService locationService;
         private IUserRepo userRepo;
         private UserService userService;
-        private ICartRepo cartRepo;
-        private CartService cartService;
         public ChangeLocationMenu(ref User user, ref GGsContext context, DBMapper mapper)
         {
             this.user = user;
@@ -29,11 +27,9 @@ namespace GGsUI.Menus
             
             this.userRepo = new DBRepo(context, mapper);
             this.locationRepo = new DBRepo(context, mapper);
-            this.cartRepo = new DBRepo(context, mapper);
 
             this.userService = new UserService(userRepo);
             this.locationService = new LocationService(locationRepo);
-            this.cartService = new CartService(cartRepo);
         }
         public void Start() 
         {
@@ -54,12 +50,12 @@ namespace GGsUI.Menus
             user.locationId = id;
             userService.UpdateUser(user);
 
-            Cart cart = cartService.GetCartByUserId(user.id);
-            cartService.DeleteCart(cart);
+            // Cart cart = cartService.GetCartByUserId(user.id);
+            // cartService.DeleteCart(cart);
 
-            Cart newCart = new Cart();
-            newCart.userId = user.id;
-            cartService.AddCart(newCart);
+            // Cart newCart = new Cart();
+            // newCart.userId = user.id;
+            // cartService.AddCart(newCart);
         }
     }
 }

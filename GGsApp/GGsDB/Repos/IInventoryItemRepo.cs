@@ -6,7 +6,8 @@ namespace GGsDB.Repos
     public interface IInventoryItemRepo
 {
         void AddInventoryItem(InventoryItem item);
-        void UpdateInventoryItem(InventoryItem item);
+        void DiminishInventoryItem(InventoryItem item, int quantity);
+        void ReplenishInventoryItem(InventoryItem item, int quantity);
         InventoryItem GetInventoryItemById(int id);
         List<InventoryItem> GetAllInventoryItemById(int id);
         InventoryItem GetInventoryItemByLocationId(int id);

@@ -16,10 +16,6 @@ namespace GGsUI.Menus
         private DBMapper mapper;
         private IInventoryItemRepo inventoryItemRepo;
         private InventoryItemService inventoryItemService;
-        private ICartRepo cartRepo;
-        private CartService cartService;
-        private ICartItemRepo cartItemRepo;
-        private CartItemService cartItemService;
         public ProductDetailsMenu(ref User user, VideoGame videoGame, ref GGsContext context, DBMapper mapper)
         {
             this.user = user;
@@ -28,12 +24,7 @@ namespace GGsUI.Menus
             this.mapper = mapper;
 
             this.inventoryItemRepo = new DBRepo(context, mapper);
-            this.cartRepo = new DBRepo(context, mapper);
-            this.cartItemRepo = new DBRepo(context, mapper);
-
             this.inventoryItemService = new InventoryItemService(inventoryItemRepo);
-            this.cartService = new CartService(cartRepo);
-            this.cartItemService = new CartItemService(cartItemRepo);
         }
         public void Start()
         {
@@ -57,11 +48,10 @@ namespace GGsUI.Menus
                     q = Int32.Parse(Console.ReadLine());
 
                     CartItem cartItem = new CartItem();
-                    Cart userCart = cartService.GetCartByUserId(user.id);
-                    cartItem.cartId = userCart.id;
-                    cartItem.videoGameId = videoGame.id;
                     cartItem.quantity = q;
-                    cartItemService.AddCartItem(cartItem);
+                    cartItem.videoGameId = videoGame.id;
+                    cartItem.videoGame = videoGame;
+                    user.cart.cartItems.Add(cartItem);
                     break;
                 }
                 else if (userInput.Equals("0"))

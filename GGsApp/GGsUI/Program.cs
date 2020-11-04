@@ -12,7 +12,7 @@ namespace GGsUI
         {
             GGsContext context = new GGsContext();
             DBMapper mapper = new DBMapper();
-            IMenu main = new WelcomeMenu(ref context, mapper, new DBRepo(context, mapper), new DBRepo(context, mapper), new DBRepo(context, mapper));
+            IMenu main = new WelcomeMenu(ref context, mapper, new DBRepo(context, mapper), new DBRepo(context, mapper));
             main.Start();
         }
     }
