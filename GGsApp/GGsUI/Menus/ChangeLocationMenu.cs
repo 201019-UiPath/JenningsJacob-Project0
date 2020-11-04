@@ -19,6 +19,7 @@ namespace GGsUI.Menus
         private LocationService locationService;
         private IUserRepo userRepo;
         private UserService userService;
+        private CustomerMenu customerMenu;
         public ChangeLocationMenu(ref User user, ref GGsContext context, DBMapper mapper)
         {
             this.user = user;
@@ -44,18 +45,17 @@ namespace GGsUI.Menus
                 if (userInput == 0)
                     break;
                 UpdateLocation(userInput);
+                customerMenu = new CustomerMenu(ref user, ref context, mapper);
+                customerMenu.Start();
+                break;
             }while(userInput != 0);
         }
         public void UpdateLocation(int id) {
-            user.locationId = id;
-            userService.UpdateUser(user);
+            // user.locationId = id;
+            user = userService.UpdateUser(user, id);
+            user.location = locationService.GetLocationById(id);
 
-            // Cart cart = cartService.GetCartByUserId(user.id);
-            // cartService.DeleteCart(cart);
-
-            // Cart newCart = new Cart();
-            // newCart.userId = user.id;
-            // cartService.AddCart(newCart);
+            Console.WriteLine($"New location: {user.location.street}, {user.location.city}, {user.location.state} {user.location.zipCode}");
         }
     }
 }

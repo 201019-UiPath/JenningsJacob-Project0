@@ -32,7 +32,7 @@ namespace GGsUI.Menus
             do {
                 Console.WriteLine("\n1. View Video Games");
                 Console.WriteLine("2. View Order History");
-                // Console.WriteLine("3. Change Location");
+                Console.WriteLine("3. Change Location");
                 Console.WriteLine("4. View Cart");
                 Console.WriteLine("0. Exit");
 

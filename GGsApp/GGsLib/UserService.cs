@@ -34,9 +34,9 @@ namespace GGsLib
         {
             return repo.GetUserById(id);
         }
-        public void UpdateUser(User user)
+        public User UpdateUser(User user, int id)
         {
-            repo.UpdateUser(user);
+            return repo.UpdateUserLocationId(user, id);
         }
     }
 }

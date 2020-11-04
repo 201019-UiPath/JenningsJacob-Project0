@@ -37,12 +37,17 @@ namespace GGsDB.Repos
         /// Updates a user in the database
         /// </summary>
         /// <param name="user">Updated user</param>
-        public void UpdateUser(User user)
+        public User UpdateUserLocationId(User user, int id)
         {
             using (GGsContext context = new GGsContext())
             {
-                context.Users.Update(mapper.ParseUser(user));
-                context.SaveChanges();
+                var entity = context.Users.FirstOrDefault(i => i.Id == user.id);
+                if (entity != null)
+                {
+                    entity.Locationid = id;
+                    context.SaveChanges();
+                }
+                return mapper.ParseUser(entity);
             }
         }
         /// <summary>
@@ -377,10 +382,10 @@ namespace GGsDB.Repos
         }
         public void UpdateVideoGame(VideoGame videoGame)
         {
-            using (GGsContext context1 = new GGsContext())
+            using (GGsContext context = new GGsContext())
             {
-                context1.Update<Videogames>(mapper.ParseVideoGame(videoGame));
-                context1.SaveChanges();
+                context.Update<Videogames>(mapper.ParseVideoGame(videoGame));
+                context.SaveChanges();
             }
         }
         public VideoGame GetVideoGame(int id)

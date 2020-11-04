@@ -68,7 +68,7 @@ namespace GGsUI.Menus
         public User GetManagerDetails()
         {
             User newUser = new User();
-            user.type = User.userType.Manager;
+            newUser.type = User.userType.Manager;
             string choice = "";
             
             Console.Write("\nEnter name: ");
