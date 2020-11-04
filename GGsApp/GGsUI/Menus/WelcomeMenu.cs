@@ -5,12 +5,14 @@ using GGsDB.Models;
 using GGsDB.Mappers;
 using GGsDB.Repos;
 using GGsLib;
+using Serilog;
 
 namespace GGsUI.Menus
 {
     public class WelcomeMenu : IMenu
     {
         private string userInput;
+        private User user;
         private GGsContext context;
         private DBMapper mapper;
         private UserService userService;
@@ -26,7 +28,6 @@ namespace GGsUI.Menus
             this.mapper = mapper;
 
             this.userRepo = userRepo;
-            // this.cartRepo = cartRepo;
             this.locationRepo = locationRepo;
 
             userService = new UserService(userRepo);
@@ -46,33 +47,39 @@ namespace GGsUI.Menus
                 switch (userInput)
                 {
                     case "1" :
-                        User user = SignIn();
+                        user = SignIn();
                         if (user.type == User.userType.Customer)
                         {
                             customerMenu = new CustomerMenu(ref user, ref context, mapper);
                             customerMenu.Start();
+                            Log.Information("Entering Customer Menu");
                         } else {
                             managerMenu = new ManagerMenu(ref user, ref context, userRepo, locationRepo);
                             managerMenu.Start();
+                            Log.Information("Entering Manager Menu");
                         }
                         break;
 
                     case "2":
-                        User newUser = SignUp();
+                        user = SignUp();
                         try {
-                            userService.AddUser(newUser);
+                            userService.AddUser(user);
+                            User newUser = InitializeUser(user.email);
                             customerMenu = new CustomerMenu(ref newUser, ref context, mapper);
                             customerMenu.Start();
+                            Log.Information($"Succesfully created user: {user.name}");
+                            Log.Information("Entering Customer Menu");
                         } catch(Exception e)
                         {
+                            Log.Error(e.Message);
                             Console.WriteLine(e.Message);
                             continue;
                         }
-                        
                         break;
 
                     case "0" :
                         Console.WriteLine("Goodbye!");
+                        Log.Information("Exiting Application...");
                         Environment.Exit(0);
                         break;
 
@@ -91,33 +98,19 @@ namespace GGsUI.Menus
         {
             string email;
             User user = new User();
+            do {
+                Console.Write("Enter Email:");
+                email = Console.ReadLine();
 
-            Console.Write("Enter Email:");
-            email = Console.ReadLine();
-
-            try {
-                user = userService.GetUserByEmail(email);
-                if (user.type == User.userType.Customer)
-                {
-                    try {
-                        // Delete previous 
-                        user.cart = new Cart();
-                        user.cart.cartItems.Clear();
-                        // cartService.DeleteCart(cartService.GetCartByUserId(user.id));
-                    } catch (InvalidOperationException){
-                        // Handle exception
-                    }
-                    finally {
-                        // Create new card and add to DB
-                        // Cart newCart = new Cart();
-                        // newCart.userId = user.id;
-                        // cartService.AddCart(newCart);
-                    }
+                try {
+                    user = InitializeUser(email);
+                    break;
+                } catch (Exception e) {
+                    Log.Error($"Error occured hwen initializing user with: {user.email}");
+                    Log.Error(e.Message);
+                    continue;
                 }
-            } catch (ArgumentException) {
-                // Log error and restart
-            }
-
+            } while(true);
             return user;
         }
         /// <summary>
@@ -127,7 +120,6 @@ namespace GGsUI.Menus
         public User SignUp()
         {
             User newUser = new User();
-            bool showMenu = true;
             string choice;
 
             newUser.type = User.userType.Customer;
@@ -145,40 +137,21 @@ namespace GGsUI.Menus
                 {
                     Console.WriteLine($"{l.id}. {l.city}, {l.state}");
                 }
+                Console.WriteLine("0. Go Back");
                 choice = Console.ReadLine();
-                switch(choice)
-                {
-                    case "1":
-                        newUser.locationId = 1;
-                        showMenu = false;
-                        break;
-                    case "2":
-                        newUser.locationId = 2;
-                        showMenu = false;
-                        break;
-                    case "3":
-                        newUser.locationId = 3;
-                        showMenu = false;
-                        break;
-                    case "4":
-                        newUser.locationId = 4;
-                        showMenu = false;
-                        break;
-                    case "5":
-                        newUser.locationId = 5;
-                        showMenu = false;
-                        break;
-                    default:
-                        Console.WriteLine("Invalid Input");
-                        break;
-                }
-            } while (showMenu);
-
-            // Cart newCart = new Cart();
-            // newCart.userId = newUser.id;
-            // cartService.AddCart(newCart);
+                if (choice.Equals("0"))
+                    break;
+                else
+                    newUser.locationId = Int32.Parse(choice);
+            } while (!choice.Equals("0"));
             return newUser;
-            
+        }
+        private User InitializeUser(string email)
+        {
+            User newUser = userService.GetUserByEmail(email);
+            newUser.cart = new Cart();
+            newUser.location = locationService.GetLocationById(newUser.locationId);
+            return newUser;
         }
     }
 }

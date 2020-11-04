@@ -5,6 +5,7 @@ using GGsDB.Repos;
 using GGsLib;
 using System;
 using System.Collections.Generic;
+using Serilog;
 
 namespace GGsUI.Menus
 {
@@ -46,13 +47,16 @@ namespace GGsUI.Menus
                 {
                     case "1":
                         menu.Start();
+                        Log.Information("Entering Edit Inventory Menu");
                         break;
                     case "2":
                         User newUser = GetManagerDetails();
+                        // TODO: Encolse in try-catch block for exception handling
                         userService.AddUser(newUser);
                         break;
                     case "0":
                         Console.WriteLine("Exiting application. Have a good day");
+                        Log.Information("Exiting Applicaton");
                         Environment.Exit(0);
                         break;
                     default:
@@ -65,8 +69,7 @@ namespace GGsUI.Menus
         {
             User newUser = new User();
             user.type = User.userType.Manager;
-            string choice;
-            bool showMenu = true;
+            string choice = "";
             
             Console.Write("\nEnter name: ");
             newUser.name = Console.ReadLine();
@@ -76,39 +79,30 @@ namespace GGsUI.Menus
 
             Console.WriteLine("\nEnter a store location: ");
             do {
-                List<Location> locations = locationService.GetAllLocations();
-                foreach(var l in locations)
+                try {
+                    List<Location> locations = locationService.GetAllLocations();
+                    foreach(var l in locations)
+                    {
+                        Console.WriteLine($"{l.id}. {l.city}, {l.state}");
+                    }
+                    choice = Console.ReadLine();
+                    Console.WriteLine("0. Go Back");
+                    if (choice.Equals("0"))
+                        break;
+                    else
+                    {
+                        newUser.locationId = Int32.Parse(choice);
+                        newUser.location = locationService.GetLocationById(newUser.locationId);
+                        break;
+                    }
+                        
+                } catch (Exception e)
                 {
-                    Console.WriteLine($"{l.id}. {l.street} {l.city}, {l.state} {l.zipCode}");
+                    Log.Error($"Error occured while trying to get all locations");
+                    Log.Error(e.Message);
+                    continue;
                 }
-                choice = Console.ReadLine();
-                switch(choice)
-                {
-                    case "1":
-                        newUser.locationId = 1;
-                        showMenu = false;
-                        break;
-                    case "2":
-                        newUser.locationId = 2;
-                        showMenu = false;
-                        break;
-                    case "3":
-                        newUser.locationId = 3;
-                        showMenu = false;
-                        break;
-                    case "4":
-                        newUser.locationId = 4;
-                        showMenu = false;
-                        break;
-                    case "5":
-                        newUser.locationId = 5;
-                        showMenu = false;
-                        break;
-                    default:
-                        Console.WriteLine("Invalid Input");
-                        break;
-                }
-            } while (showMenu);
+            } while (!choice.Equals("0"));
             
             return newUser;
         }
