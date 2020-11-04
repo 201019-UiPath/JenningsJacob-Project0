@@ -132,6 +132,7 @@ namespace GGsDB.Entities
                 entity.Property(e => e.Quantity).HasColumnName("quantity");
 
                 entity.Property(e => e.Videogameid).HasColumnName("videogameid");
+                entity.Property(e => e.Cost).HasColumnName("cost");
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.Lineitems)

@@ -71,7 +71,7 @@ namespace GGsUI.Menus
                     vg.PrintInfo();
                 }
 
-                Console.WriteLine("Select an option: ");
+                Console.WriteLine("\nSelect an option: ");
                 Console.WriteLine("1. Purchase items in cart");
                 // Console.WriteLine("2. Edit items in cart");
                 Console.WriteLine("0. Exit");
@@ -115,7 +115,7 @@ namespace GGsUI.Menus
                 LineItem lineItem = new LineItem();
                 lineItem.orderId = newOrder.id;
                 lineItem.videoGameId = item.videoGameId;
-                lineItem.price = videoGame.cost;
+                lineItem.cost = videoGame.cost;
                 lineItem.quantity = item.quantity;
 
                 totalCost += (videoGame.cost * item.quantity);
@@ -130,7 +130,7 @@ namespace GGsUI.Menus
 
             order.totalCost = totalCost;
             orderService.UpdateOrder(newOrder);
-            Console.WriteLine("Your has completed, thank you again");
+            Console.WriteLine("Your has completed, thank you again"); 
         }
     }
 }

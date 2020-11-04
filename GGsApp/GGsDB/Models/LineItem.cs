@@ -8,6 +8,6 @@ namespace GGsDB.Models
         public int videoGameId {get; set;}
         public VideoGame videoGame {get; set;}
         public int quantity {get; set;}
-        public decimal price {get; set;}
+        public decimal cost {get; set;}
     }
 }

@@ -162,7 +162,7 @@ namespace GGsDB.Mappers
                 quantity = item.Quantity,
                 // order = ParseOrder(item.Order),
                 // videoGame = ParseVideoGame(item.Videogame),
-                price = item.Price
+                cost = item.Cost
             };
         }
 
@@ -178,7 +178,7 @@ namespace GGsDB.Mappers
                 Quantity = item.quantity,
                 // Order = ParseOrder(item.order),
                 // Videogame = ParseVideoGame(item.videoGame),
-                Price = item.price
+                Cost = item.cost
             };
         }
 

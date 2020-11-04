@@ -1,4 +1,4 @@
--- drop table cart cascade;
+-- drop table carts cascade;
 -- drop table cartitem cascade;
 -- drop table inventoryitem cascade;
 -- drop table lineitem cascade;

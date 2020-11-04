@@ -35,7 +35,7 @@ namespace GGsUI.Menus
             this.locationService = new LocationService(locationRepo);
             this.cartService = new CartService(cartRepo);
         }
-        public void Start()
+        public void Start() 
         {
             do {
                 List<Location> locations = locationService.GetAllLocations();

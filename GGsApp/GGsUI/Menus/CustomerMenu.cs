@@ -18,6 +18,7 @@ namespace GGsUI.Menus
         public CustomerMenu(ref User user, GGsContext context, DBMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
             this.user = user;
 
             this.orderHistoryMenu = new OrderHistoryMenu(ref user, ref context);
@@ -29,9 +30,9 @@ namespace GGsUI.Menus
         {
             Console.WriteLine($"\nWelcome back {user.name}. What would you like to do?");
             do {
-                Console.WriteLine("1. View Video Games");
+                Console.WriteLine("\n1. View Video Games");
                 Console.WriteLine("2. View Order History");
-                Console.WriteLine("3. Change Location");
+                // Console.WriteLine("3. Change Location");
                 Console.WriteLine("4. View Cart");
                 Console.WriteLine("0. Exit");
 

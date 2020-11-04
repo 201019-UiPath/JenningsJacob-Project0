@@ -33,7 +33,7 @@ namespace GGsUI.Menus
 
             this.menu = new EditInventoryMenu(ref user, ref context, new DBRepo(context, mapper), new DBRepo(context, mapper), new DBRepo(context, mapper));
         }
-        public void Start()
+        public void Start() 
         {
             do {
                 Console.WriteLine($"Welcome back {user.name}!");
