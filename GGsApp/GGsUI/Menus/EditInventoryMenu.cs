@@ -81,9 +81,11 @@ namespace GGsUI.Menus
                 foreach (var item in items)
                 {
                     VideoGame videoGame = videoGameService.GetVideoGame(item.videoGameId);
+                    Console.Write($"{videoGame.id}. ");
                     videoGame.PrintInfo();
+                    Console.WriteLine($"Quantity: {item.quantity}");
                 }
-                Console.WriteLine("0. Exit");
+                Console.WriteLine("\n0. Go Back");
                 choice = Console.ReadLine();
                 if (choice.Equals("0"))
                     break;
@@ -91,6 +93,11 @@ namespace GGsUI.Menus
                     ReplenishStock(Int32.Parse(choice));
             } while(!choice.Equals("0"));
         }
+        /// <summary>
+        /// Asks the user how much of a certain item they wish to replenish
+        /// This is business logic that probaly belongs in GGsLib
+        /// </summary>
+        /// <param name="id">The videoGameId of the item they wish to replenish</param>
         public void ReplenishStock(int id)
         {
             selectedItem = inventoryService.GetInventoryItem(locationId, id);

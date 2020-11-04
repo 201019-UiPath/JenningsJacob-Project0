@@ -43,6 +43,7 @@ namespace GGsUI.Menus
         public void Start()
         {
             do {
+                Console.WriteLine("\nPlease select an option");
                 Console.WriteLine("1. Sort by date ascending");
                 Console.WriteLine("2. Sort by date descending");
                 Console.WriteLine("3. Sort by price ascending");
@@ -77,19 +78,10 @@ namespace GGsUI.Menus
 
         public void GetOrders(List<Order> orders)
         {
-            Console.WriteLine("\nOrder History:");
+            Console.WriteLine("\nOrder History:\n");
             foreach (var order in orders)
             {
-                Location location = locationService.GetLocationById(order.locationId);
-                Console.WriteLine($"Date: {order.orderDate}\tTotal: {order.totalCost}\tLocation: {location.city}, {location.state}");
-
-                Console.WriteLine("\nLine items:");
-                List<LineItem> items = lineItemService.GetAllLineItemsById(order.id);
-                foreach(var item in items)
-                {
-                    VideoGame videoGame = videoGameService.GetVideoGame(item.videoGameId);
-                    videoGame.PrintInfo();
-                }
+                orderService.GenerateReceipt(order, locationService, lineItemService, videoGameService);
             }
             // Clear orders in case they wish to change how they view it
             orders.Clear();

@@ -20,6 +20,7 @@ namespace GGsUI.Menus
         private ICartRepo cartRepo;
         private ILocationRepo locationRepo;
         private CustomerMenu customerMenu;
+        private ManagerMenu managerMenu;
         public WelcomeMenu(ref GGsContext context, DBMapper mapper, IUserRepo userRepo, ICartRepo cartRepo, ILocationRepo locationRepo)
         {
             this.context = context;
@@ -41,25 +42,32 @@ namespace GGsUI.Menus
                 //Welcome Menu options
                 Console.WriteLine("1. Sign In");
                 Console.WriteLine("2. Sign Up");
-                Console.WriteLine("3. Exit");
+                Console.WriteLine("0. Exit");
                 userInput = Console.ReadLine();
 
                 switch (userInput)
                 {
                     case "1" :
                         User user = SignIn();
-                        customerMenu = new CustomerMenu(ref user, context, mapper);
-                        customerMenu.Start();
+                        if (user.type == User.userType.Customer)
+                        {
+                            customerMenu = new CustomerMenu(ref user, ref context, mapper);
+                            customerMenu.Start();
+                        } else {
+                            managerMenu = new ManagerMenu(ref user, ref context, userRepo, locationRepo);
+                            managerMenu.Start();
+                        }
+                        
                         break;
 
                     case "2":
                         User newUser = SignUp();
                         userService.AddUser(newUser);
-                        customerMenu = new CustomerMenu(ref newUser, context, mapper);
+                        customerMenu = new CustomerMenu(ref newUser, ref context, mapper);
                         customerMenu.Start();
                         break;
 
-                    case "3" :
+                    case "0" :
                         Console.WriteLine("Goodbye!");
                         Environment.Exit(0);
                         break;
@@ -69,7 +77,7 @@ namespace GGsUI.Menus
                         break;
                 }
 
-            } while(!userInput.Equals("3"));
+            } while(!userInput.Equals("0"));
         }
         /// <summary>
         /// Prints instructions for users to sign in and creates new cart

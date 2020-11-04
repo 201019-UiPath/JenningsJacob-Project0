@@ -15,7 +15,7 @@ namespace GGsUI.Menus
         private OrderHistoryMenu orderHistoryMenu;
         private ChangeLocationMenu changeLocationMenu;
         private CartMenu cartMenu;
-        public CustomerMenu(ref User user, GGsContext context, DBMapper mapper)
+        public CustomerMenu(ref User user, ref GGsContext context, DBMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;

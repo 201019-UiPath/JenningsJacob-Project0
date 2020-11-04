@@ -31,6 +31,7 @@ namespace GGsUI.Menus
         private ILineItemRepo lineItemRepo;
         private LineItemService lineItemService;
         private EditCartMenu editCartMenu;
+        private CustomerMenu customerMenu;
         public CartMenu(ref User user, ref GGsContext context, DBMapper mapper)
         {
             this.user = user;
@@ -68,69 +69,35 @@ namespace GGsUI.Menus
                 foreach (var item in items)
                 {
                     VideoGame vg = videoGameService.GetVideoGame(item.videoGameId);
+                    Console.Write($"{item.quantity}x\t");
                     vg.PrintInfo();
                 }
 
                 Console.WriteLine("\nSelect an option: ");
                 Console.WriteLine("1. Purchase items in cart");
                 // Console.WriteLine("2. Edit items in cart");
-                Console.WriteLine("0. Exit");
+                Console.WriteLine("0. Go Back");
                 userInput = Console.ReadLine();
 
                 switch(userInput) {
                     case "1":
-                        MakePurchase();
+                        Order newOrder = orderService.MakePurchase(user, cartService, cartItemService, videoGameService, lineItemService, inventoryItemService);
+                        Console.WriteLine("\nOrder Receipt:");
+                        orderService.GenerateReceipt(newOrder, locationService, lineItemService, videoGameService);
+                        Console.WriteLine("\nYour has completed, thank you again");
+                        customerMenu = new CustomerMenu(ref user, ref context, mapper);
+                        customerMenu.Start();
                         break;
                     case "2":
                         // editCartMenu.Start();
                         break;
                     case "0":
-                        Console.WriteLine("Exiting");
-                        Environment.Exit(0);
                         break;
                     default:
                         Console.WriteLine("Try again");
                         break;  
                 }
             } while(!userInput.Equals("0"));
-        }
-        public void MakePurchase()
-        {
-            Cart cart = cartService.GetCartByUserId(user.id);
-            List<CartItem> items = cartItemService.GetAllCartItems(cart.id);
-
-            Order order = new Order();
-            decimal totalCost = 0;
-
-            order.userId = user.id;
-            order.locationId = user.locationId;
-            DateTime orderDate = order.orderDate = DateTime.Now;
-            orderService.AddOrder(order);
-
-            Order newOrder = orderService.GetOrderByDate(orderDate);
-
-            foreach (var item in items)
-            {
-                VideoGame videoGame = videoGameService.GetVideoGame(item.videoGameId);
-                LineItem lineItem = new LineItem();
-                lineItem.orderId = newOrder.id;
-                lineItem.videoGameId = item.videoGameId;
-                lineItem.cost = videoGame.cost;
-                lineItem.quantity = item.quantity;
-
-                totalCost += (videoGame.cost * item.quantity);
-
-                lineItemService.AddLineItem(lineItem);
-                cartItemService.DeleteCartItem(item);
-
-                InventoryItem inventoryItem = inventoryItemService.GetInventoryItem(user.locationId, videoGame.id);
-                inventoryItem.quantity--;
-                inventoryItemService.UpdateInventoryItem(inventoryItem);
-            }
-
-            order.totalCost = totalCost;
-            orderService.UpdateOrder(newOrder);
-            Console.WriteLine("Your has completed, thank you again"); 
         }
     }
 }

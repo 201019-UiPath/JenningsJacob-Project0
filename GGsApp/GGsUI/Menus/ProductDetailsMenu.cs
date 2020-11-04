@@ -43,6 +43,7 @@ namespace GGsUI.Menus
 
                 Console.WriteLine("\nSelected Product: ");
                 videoGame.PrintInfo();
+                Console.WriteLine($"Quantity: {item.quantity}");
                 Console.WriteLine("1. Add to cart");
                 Console.WriteLine("0. Go back");
 

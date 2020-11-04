@@ -187,7 +187,10 @@ namespace GGsDB.Repos
         {
             using (GGsContext context = new GGsContext())
             {
-                return mapper.ParseInventoryItem(context.Inventoryitems.Where(x => x.Locationid == id).ToList());
+                return mapper.ParseInventoryItem(context.Inventoryitems
+                .Where(x => x.Locationid == id)
+                .OrderBy(x => x.Id).
+                ToList());
             }
         }
         public List<LineItem> GetAllLineItemsByOrderId(int id)

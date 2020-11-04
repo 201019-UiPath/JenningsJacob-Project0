@@ -36,10 +36,10 @@ namespace GGsUI.Menus
         public void Start() 
         {
             do {
-                Console.WriteLine($"Welcome back {user.name}!");
+                Console.WriteLine($"\nWelcome back {user.name}!");
                 Console.WriteLine("1. Manage inventory");
                 Console.WriteLine("2. Create new manager");
-                Console.WriteLine("3. Exit");
+                Console.WriteLine("0. Exit");
                 
                 userInput = Console.ReadLine(); 
                 switch(userInput)
@@ -51,7 +51,7 @@ namespace GGsUI.Menus
                         User newUser = GetManagerDetails();
                         userService.AddUser(newUser);
                         break;
-                    case "3":
+                    case "0":
                         Console.WriteLine("Exiting application. Have a good day");
                         Environment.Exit(0);
                         break;
@@ -59,7 +59,7 @@ namespace GGsUI.Menus
                         Console.WriteLine("Try again");
                         break;
                 }
-            } while(!userInput.Equals("3"));
+            } while(!userInput.Equals("0"));
         }
         public User GetManagerDetails()
         {
@@ -68,18 +68,18 @@ namespace GGsUI.Menus
             string choice;
             bool showMenu = true;
             
-            Console.Write("Enter name: ");
+            Console.Write("\nEnter name: ");
             newUser.name = Console.ReadLine();
 
             Console.Write("Enter email: ");
             newUser.email = Console.ReadLine();
 
-            Console.WriteLine("Enter a preferred location: ");
+            Console.WriteLine("\nEnter a store location: ");
             do {
                 List<Location> locations = locationService.GetAllLocations();
                 foreach(var l in locations)
                 {
-                    Console.WriteLine($"{l.id}. {l.city}, {l.state}");
+                    Console.WriteLine($"{l.id}. {l.street} {l.city}, {l.state} {l.zipCode}");
                 }
                 choice = Console.ReadLine();
                 switch(choice)

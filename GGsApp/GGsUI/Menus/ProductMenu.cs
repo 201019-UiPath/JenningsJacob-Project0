@@ -39,7 +39,9 @@ namespace GGsUI.Menus
                 List<InventoryItem> items = invetoryItemService.GetAllInventoryItemByLocationId(user.locationId);
                 foreach(var item in items) {
                     VideoGame videoGame = videoGameService.GetVideoGame(item.videoGameId);
+                    Console.Write($"{videoGame.id}. ");
                     videoGame.PrintInfo();
+                    Console.WriteLine($"Quantity: {item.quantity}\n");
                 }
                 Console.WriteLine("\n0. Go back");
 

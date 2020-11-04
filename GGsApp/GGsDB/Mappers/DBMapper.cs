@@ -223,8 +223,6 @@ namespace GGsDB.Mappers
 
         public Locations ParseLocation(Location location)
         {
-            // if (location.Equals(null))
-            //     return new Locations();
             return new Locations()
             {
                 Id = location.id,
@@ -232,14 +230,11 @@ namespace GGsDB.Mappers
                 City = location.city,
                 State = location.state,
                 Zipcode = location.zipCode,
-                // Inventoryitems = ParseInventoryItem(location.inventory)
             };
         }
 
         public List<Location> ParseLocation(ICollection<Locations> locations)
         {
-            // if (locations.Equals(null))
-            //     return new List<Location>();
             List<Location> allLocations = new List<Location>();
             foreach(var l in locations)
             {
@@ -250,8 +245,6 @@ namespace GGsDB.Mappers
 
         public ICollection<Locations> ParseLocation(List<Location> locations)
         {
-            // if (locations.Equals(null))
-            //     return new List<Locations>();
             ICollection<Locations> allLocations = new List<Locations>();
             foreach(var l in locations)
             {
