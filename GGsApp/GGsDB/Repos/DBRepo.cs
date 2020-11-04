@@ -329,6 +329,37 @@ namespace GGsDB.Repos
                 return mapper.ParseOrder(context.Orders.Where(x => x.Userid == userId).OrderByDescending(x => x.Totalcost).ToList());
             }
         }
+        public List<Order> GetAllLocationOrdersDateAsc(int locationId)
+        {
+            using (GGsContext context = new GGsContext())
+            {
+                return mapper.ParseOrder(context.Orders.Where(x => x.Locationid == locationId).OrderBy(x => x.Orderdate).ToList());
+            }
+        }
+
+        public List<Order> GetAllLocationOrdersDateDesc(int locationId)
+        {
+            using (GGsContext context = new GGsContext())
+            {
+                return mapper.ParseOrder(context.Orders.Where(x => x.Locationid == locationId).OrderByDescending(x => x.Orderdate).ToList());
+            }
+        }
+
+        public List<Order> GetAllLocationOrdersPriceAsc(int locationId)
+        {
+            using (GGsContext context = new GGsContext())
+            {
+                return mapper.ParseOrder(context.Orders.Where(x => x.Locationid == locationId).OrderBy(x => x.Totalcost).ToList());
+            }
+        }
+
+        public List<Order> GetAllLocationOrdersPriceDesc(int locationId)
+        {
+            using (GGsContext context = new GGsContext())
+            {
+                return mapper.ParseOrder(context.Orders.Where(x => x.Locationid == locationId).OrderByDescending(x => x.Totalcost).ToList());
+            }
+        }
         public Order GetOrderByDate(DateTime orderDate)
         {
             using (GGsContext context = new GGsContext())

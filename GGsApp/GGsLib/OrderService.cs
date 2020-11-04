@@ -60,6 +60,22 @@ namespace GGsLib
         {
             return repo.GetAllOrdersPriceDesc(userId);
         }
+        public List<Order> GetAllLocationOrdersDateAsc(int locatoinId)
+        {
+            return repo.GetAllLocationOrdersDateAsc(locatoinId);
+        }
+        public List<Order> GetAllLocationOrdersDateDesc(int locatoinId)
+        {
+            return repo.GetAllLocationOrdersDateDesc(locatoinId);
+        }
+        public List<Order> GetAllLocationOrdersPriceAsc(int locatoinId)
+        {
+            return repo.GetAllLocationOrdersPriceAsc(locatoinId);
+        }
+        public List<Order> GetAllLocationOrdersPriceDesc(int locatoinId)
+        {
+            return repo.GetAllLocationOrdersPriceDesc(locatoinId);
+        }
         public Order UpdateOrderCost(Order order, decimal totalCost)
         {
             return repo.UpdateOrderCost(order, totalCost);

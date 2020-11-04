@@ -18,6 +18,10 @@ namespace GGsDB.Repos
         List<Order> GetAllOrdersDateDesc(int userId);
         List<Order> GetAllOrdersPriceAsc(int userId);
         List<Order> GetAllOrdersPriceDesc(int userId);
+        List<Order> GetAllLocationOrdersDateAsc(int locationId);
+        List<Order> GetAllLocationOrdersDateDesc(int locationId);
+        List<Order> GetAllLocationOrdersPriceAsc(int locationId);
+        List<Order> GetAllLocationOrdersPriceDesc(int locationId);
         void DeleteOrder(Order order);
     }
 }

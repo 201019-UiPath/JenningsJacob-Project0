@@ -19,7 +19,8 @@ namespace GGsUI.Menus
         private ILocationRepo locRepo;
         private UserService userService;
         private LocationService locationService;
-        private EditInventoryMenu menu;
+        private EditInventoryMenu editInventoryMenu;
+        private LocationOrderHistoryMenu locationOrderHistoryMenu;
         public ManagerMenu(ref User user, ref GGsContext context, IUserRepo userRepo, ILocationRepo locRepo)
         {
             this.user = user;
@@ -32,7 +33,8 @@ namespace GGsUI.Menus
             this.userService = new UserService(userRepo);
             this.locationService = new LocationService(locRepo);
 
-            this.menu = new EditInventoryMenu(ref user, ref context, new DBRepo(context, mapper), new DBRepo(context, mapper), new DBRepo(context, mapper));
+            this.editInventoryMenu = new EditInventoryMenu(ref user, ref context, new DBRepo(context, mapper), new DBRepo(context, mapper), new DBRepo(context, mapper));
+            this.locationOrderHistoryMenu = new LocationOrderHistoryMenu(ref user, ref context);
         }
         public void Start() 
         {
@@ -40,19 +42,23 @@ namespace GGsUI.Menus
                 Console.WriteLine($"\nWelcome back {user.name}!");
                 Console.WriteLine("1. Manage inventory");
                 Console.WriteLine("2. Create new manager");
+                Console.WriteLine("3. View location order history");
                 Console.WriteLine("0. Exit");
                 
                 userInput = Console.ReadLine(); 
                 switch(userInput)
                 {
                     case "1":
-                        menu.Start();
+                        editInventoryMenu.Start();
                         Log.Information("Entering Edit Inventory Menu");
                         break;
                     case "2":
                         User newUser = GetManagerDetails();
                         // TODO: Encolse in try-catch block for exception handling
                         userService.AddUser(newUser);
+                        break;
+                    case "3":
+                        locationOrderHistoryMenu.Start();
                         break;
                     case "0":
                         Console.WriteLine("Exiting application. Have a good day");

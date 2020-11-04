@@ -35,6 +35,7 @@ namespace GGsUI.Menus
         public void Start() 
         {
             do {
+                Console.WriteLine("\nSelect a location:");
                 List<Location> locations = locationService.GetAllLocations();
                 foreach (var l in locations)
                 {
@@ -51,10 +52,8 @@ namespace GGsUI.Menus
             }while(userInput != 0);
         }
         public void UpdateLocation(int id) {
-            // user.locationId = id;
             user = userService.UpdateUser(user, id);
             user.location = locationService.GetLocationById(id);
-
             Console.WriteLine($"New location: {user.location.street}, {user.location.city}, {user.location.state} {user.location.zipCode}");
         }
     }
