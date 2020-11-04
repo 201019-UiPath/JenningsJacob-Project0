@@ -7,7 +7,7 @@ namespace GGsDB.Repos
     public interface IOrderRepo
     {
         void AddOrder(Order order);
-        void UpdateOrderCost(Order order, decimal totalCost);
+        Order UpdateOrderCost(Order order, decimal totalCost);
         Order GetOrderById(int id);
         Order GetOrderByUserId(int id);
         Order GetOrderByLocationId(int id);

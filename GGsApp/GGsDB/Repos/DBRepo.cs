@@ -352,7 +352,7 @@ namespace GGsDB.Repos
                 return mapper.ParseOrder(context.Orders.Single(x => x.Userid == id));
             }
         }
-        public void UpdateOrderCost(Order order, decimal totalCost)
+        public Order UpdateOrderCost(Order order, decimal totalCost)
         {
             using (GGsContext context = new GGsContext())
             {
@@ -362,6 +362,7 @@ namespace GGsDB.Repos
                     entity.Totalcost = totalCost;
                     context.SaveChanges();
                 }
+                return mapper.ParseOrder(entity);
             }
         }
         #endregion

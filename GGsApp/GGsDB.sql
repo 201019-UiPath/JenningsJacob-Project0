@@ -86,13 +86,6 @@ insert into Users (name, email, locationId, type) VALUES
 ('Ellie', 'emac@gmail.com', 3, 'Customer'),
 ('Jacob', 'jjennings@gmail.com', 4, 'Manager');
 
-insert into Carts (userId) VALUES
-(1),
-(2),
-(3),
-(4),
-(5);
-
 insert into inventoryitems (videogameid, locationid, quantity) VALUES
 (1, 1, 5),
 (1, 2, 4),

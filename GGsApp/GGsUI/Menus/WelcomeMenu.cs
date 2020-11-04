@@ -131,19 +131,13 @@ namespace GGsUI.Menus
             newUser.email = Console.ReadLine();
 
             Console.WriteLine("Enter a preferred location: ");
-            do {
                 List<Location> locations = locationService.GetAllLocations();
                 foreach(var l in locations)
                 {
                     Console.WriteLine($"{l.id}. {l.city}, {l.state}");
                 }
-                Console.WriteLine("0. Go Back");
                 choice = Console.ReadLine();
-                if (choice.Equals("0"))
-                    break;
-                else
-                    newUser.locationId = Int32.Parse(choice);
-            } while (!choice.Equals("0"));
+                newUser.locationId = Int32.Parse(choice);
             return newUser;
         }
         private User InitializeUser(string email)

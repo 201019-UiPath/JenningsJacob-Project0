@@ -60,9 +60,9 @@ namespace GGsLib
         {
             return repo.GetAllOrdersPriceDesc(userId);
         }
-        public void UpdateOrderCost(Order order, decimal totalCost)
+        public Order UpdateOrderCost(Order order, decimal totalCost)
         {
-            repo.UpdateOrderCost(order, totalCost);
+            return repo.UpdateOrderCost(order, totalCost);
         }
         /// <summary>
         /// Prepares and completes order while updating appropriate tables in the database
@@ -107,7 +107,7 @@ namespace GGsLib
             }
             // Clear user cart and update order cost
             user.cart.cartItems.Clear();
-            UpdateOrderCost(order, totalCost);
+            newOrder = UpdateOrderCost(order, totalCost);
             return newOrder;
         }
     }
